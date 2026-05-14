@@ -1,0 +1,10 @@
+node_modules/
+.git/
+*.log
+src/mygeodata/
+public/mygeodata/
+dist/
+build/
+.temp/
+tmp/
+C:\Users\prana\Desktop\FS34 Backend\Bansal Hackathon\backendFrontendTest\pranavFrontend\

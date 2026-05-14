@@ -1,0 +1,884 @@
+{
+  "city_metadata": {
+    "city": "Bhopal",
+    "state": "Madhya Pradesh",
+    "country": "India",
+    "governing_body": "Bhopal Municipal Corporation (BMC)",
+    "police_body": "Bhopal Police Commissionerate",
+    "total_zones": 14,
+    "total_wards": 85,
+    "area_km2": 463,
+    "city_center_coordinates": [23.2599, 77.4126],
+    "bounding_box": {
+      "north": 23.3500,
+      "south": 23.1600,
+      "east": 77.5200,
+      "west": 77.3000
+    },
+    "key_water_bodies": [
+      {
+        "name": "Upper Lake (Bada Talab / Bhojtal)",
+        "coordinates": [23.2680, 77.3726],
+        "ecological_sensitivity": "CRITICAL",
+        "note": "Largest man-made lake in Asia at time of construction. Any sanitation or chemical discharge near this lake must be escalated to CRITICAL priority immediately."
+      },
+      {
+        "name": "Lower Lake (Chhota Talab)",
+        "coordinates": [23.2530, 77.3950],
+        "ecological_sensitivity": "HIGH",
+        "note": "Connects to Upper Lake. Waste dumping near this area auto-escalates to HIGH priority."
+      },
+      {
+        "name": "Shahpura Lake",
+        "coordinates": [23.2050, 77.4280],
+        "ecological_sensitivity": "MEDIUM",
+        "note": "Urban lake in residential zone. Encroachment and illegal dumping are primary concerns."
+      },
+      {
+        "name": "Kerwa Dam / Reservoir",
+        "coordinates": [23.1750, 77.4600],
+        "ecological_sensitivity": "HIGH",
+        "note": "Source of drinking water. Any pollution complaint near Kerwa must be treated as HIGH."
+      }
+    ],
+    "local_slang_dictionary": {
+      "kachra": "Garbage/Solid Waste (Sanitation Department)",
+      "safai": "Cleaning/Sweeping (Sanitation Department)",
+      "naali": "Open drain or sewer (Sanitation/PWD)",
+      "nali": "Drain (variant of naali)",
+      "jam": "Traffic congestion (Traffic Police)",
+      "jaam": "Traffic jam (variant)",
+      "challan": "Traffic violation/fine (Traffic Police)",
+      "khadda": "Pothole or road pit (PWD)",
+      "khaddaa": "Pothole, deeper variant",
+      "gadda": "Pothole / road pit (PWD alternate term used in Bhopal)",
+      "puliya": "Small bridge or culvert (PWD)",
+      "pul": "Bridge (PWD)",
+      "andhera": "Darkness / streetlight is off (Electricity - MPMKVVCL)",
+      "bijli": "Electricity issue",
+      "light nahi": "No electricity / light is out (MPMKVVCL)",
+      "transformer": "Transformer fault (MPMKVVCL)",
+      "taar": "Live wire (MPMKVVCL - CRITICAL if sparking)",
+      "paani nahi": "No water supply (Water Supply Department)",
+      "paani aata nahi": "Water not coming (Water Supply)",
+      "paani ka pressure kam": "Low water pressure (Water Supply)",
+      "sewer": "Sewer blockage (Sanitation)",
+      "manhole": "Open or broken manhole (PWD/Sanitation)",
+      "gutter": "Open sewer/drain (Sanitation)",
+      "road tuta": "Road broken (PWD)",
+      "road tooti": "Road broken, feminine form (PWD)",
+      "pathar": "Stone or rock obstruction on road (PWD)",
+      "patthar": "Same as above",
+      "encroachment": "Illegal occupancy of public space (Planning/BMC)",
+      "kabza": "Illegal possession / encroachment (Planning/BMC)",
+      "rehdi": "Street vendor cart blocking road (BMC/Traffic)",
+      "khomcha": "Small roadside food stall (BMC)",
+      "aawara": "Stray animals (Sanitation/Animal Husbandry)",
+      "aawara kutta": "Stray dog (BMC Animal Husbandry)",
+      "sanand": "Stray cattle (BMC/Animal Husbandry)",
+      "gaay": "Stray cow on road (BMC Animal Husbandry)",
+      "dhuan": "Smoke/pollution (MPPCB)",
+      "dhuaan": "Smoke variant",
+      "badbu": "Foul smell (Sanitation)",
+      "gandgi": "Filth/uncleanliness (Sanitation)",
+      "jhuggi": "Slum/makeshift dwelling (Planning)",
+      "park": "Park/garden maintenance (Parks Department)",
+      "bagicha": "Garden (Parks Department)",
+      "maidan": "Open ground (Parks/BMC)",
+      "nala": "Large drain / seasonal stream (PWD/Flood Control)",
+      "bhiya": "Polite local greeting - ignore for classification",
+      "bhai sahab": "Greeting/address - ignore for classification",
+      "bhaiya": "Greeting variant - ignore for classification",
+      "ji": "Respectful suffix - ignore for classification",
+      "hain ji": "Acknowledgement phrase - ignore for classification",
+      "dekhna": "Please look into this - marker of complaint intent",
+      "karo bhai": "Please do something - marker of complaint intent",
+      "kab hoga": "When will this be fixed - marker of frustration/repeat complaint",
+      "bahut din se": "For many days - indicates chronic/ongoing issue",
+      "kaafi time se": "Since a long time - chronic issue indicator",
+      "aaj kal": "These days - recent issue indicator"
+    }
+  },
+
+  "zones": [
+    {
+      "zone_id": 1,
+      "zone_name": "Sant Hirdaram Nagar",
+      "zone_office_location": "Sant Hirdaram Nagar Paani ki Tanki ke paas",
+      "wards": [1, 2, 3, 4],
+      "centroid": [23.2850, 77.3450],
+      "area_type": "residential_mixed",
+      "entry_point": true,
+      "characteristics": "Western entry point of Bhopal from Indore highway. Dense residential colony with moderate commercial activity. Sant Hirdaram Nagar is a planned colony.",
+      "primary_concerns": ["sanitation", "water_supply", "road_damage"],
+      "flood_risk": "LOW"
+    },
+    {
+      "zone_id": 2,
+      "zone_name": "Bairagarh",
+      "zone_office_location": "Royal Market, GPO ke saamne",
+      "wards": [5, 6, 8, 9, 19],
+      "centroid": [23.2700, 77.3500],
+      "area_type": "commercial_transit",
+      "entry_point": true,
+      "characteristics": "Major entry point from Indore/Dewas highway (NH-47). Heavy commercial vehicle traffic. Bairagarh Cloth Market is a major wholesale hub. Halalpur Bus Stand handles inter-city buses.",
+      "primary_concerns": ["traffic", "parking", "road_damage", "sanitation"],
+      "flood_risk": "MEDIUM"
+    },
+    {
+      "zone_id": 3,
+      "zone_name": "Berasia Road",
+      "zone_office_location": "DIG Bangla ke saamne, Berasia Road",
+      "wards": [10, 11, 12, 13, 14],
+      "centroid": [23.3050, 77.3950],
+      "area_type": "mixed_semi_urban",
+      "entry_point": false,
+      "characteristics": "Northern Bhopal along Berasia Road. Mix of dense old settlements and newer colonies. Khajuri Kalan and Chhola Mandir area. Road to Berasia town passes through here.",
+      "primary_concerns": ["road_damage", "sanitation", "water_supply", "streetlights"],
+      "flood_risk": "MEDIUM"
+    },
+    {
+      "zone_id": 4,
+      "zone_name": "Old City (Mangalwara)",
+      "zone_office_location": "Mangalwara Thana ke saamne",
+      "wards": [7, 15, 16, 17, 18],
+      "centroid": [23.2680, 77.4050],
+      "area_type": "heritage_dense",
+      "entry_point": false,
+      "characteristics": "Historic Old City of Bhopal. Extremely dense urban fabric with narrow medieval lanes. Itwara, Budhwara, Kohefiza markets. Heavy pedestrian and two-wheeler traffic. Heritage sensitivity HIGH.",
+      "primary_concerns": ["sanitation", "road_damage", "encroachment", "water_supply", "drainage"],
+      "flood_risk": "HIGH",
+      "heritage_sensitive": true
+    },
+    {
+      "zone_id": 5,
+      "zone_name": "Kamla Park / Shyamla Hills",
+      "zone_office_location": "Acharya Narendradev Vachanalaya, Kamla Park",
+      "wards": [20, 21, 22, 23, 24],
+      "centroid": [23.2560, 77.3940],
+      "area_type": "heritage_premium",
+      "entry_point": false,
+      "characteristics": "VIP zone. Proximity to Upper Lake (Bada Talab). Includes Shyamla Hills, Tulsi Nagar, Kamla Park. Heritage zone with tourism significance. Bhopal Gas Tragedy Memorial nearby. Raj Bhawan area. Extra sanitation sensitivity due to lake proximity.",
+      "primary_concerns": ["lake_pollution", "sanitation", "traffic", "encroachment"],
+      "flood_risk": "LOW",
+      "heritage_sensitive": true,
+      "vip_zone": true
+    },
+    {
+      "zone_id": 6,
+      "zone_name": "Shahpura",
+      "zone_office_location": "Harshavardhan Shopping Complex, Mata Mandir ke paas",
+      "wards": [25, 26, 27, 28, 46],
+      "centroid": [23.2100, 77.4280],
+      "area_type": "premium_residential",
+      "entry_point": false,
+      "characteristics": "Premium residential south Bhopal. Shahpura Lake is a major landmark. Connected to Rani Kamlapati Railway Station (formerly Habibganj). High-income area with high civic expectations. E-5 sector and Char Imli area.",
+      "primary_concerns": ["lake_cleanliness", "sanitation", "traffic", "park_maintenance"],
+      "flood_risk": "LOW"
+    },
+    {
+      "zone_id": 7,
+      "zone_name": "TT Nagar / New Market",
+      "zone_office_location": "Yatayat Park, Purani Vidhan Sabha ke saamne",
+      "wards": [30, 31, 32, 33, 34],
+      "centroid": [23.2430, 77.4050],
+      "area_type": "commercial_residential",
+      "entry_point": false,
+      "characteristics": "Central Bhopal. TT Nagar (Tatya Tope Nagar) is a major government residential colony. New Market is the most prominent shopping district. Idgah Hills, Sultania Road, Peer Gate area. High pedestrian and vehicle density.",
+      "primary_concerns": ["traffic", "parking", "sanitation", "encroachment"],
+      "flood_risk": "LOW"
+    },
+    {
+      "zone_id": 8,
+      "zone_name": "Hamidia / Habibganj",
+      "zone_office_location": "Pul Bogda Fire Brigade",
+      "wards": [40, 41, 42, 43, 64, 65],
+      "centroid": [23.2400, 77.4300],
+      "area_type": "transit_mixed",
+      "entry_point": false,
+      "characteristics": "Includes Pul Bogda, Hamidia Hospital area, Jahangirabad, Benazir, Nishatpura railway colony, and Habibganj (Rani Kamlapati) railway station area. Hamidia Hospital is the largest government hospital in Bhopal. Silence zone near hospital. Bhopal Junction Railway Station nearby.",
+      "primary_concerns": ["traffic", "road_damage", "sanitation", "silence_zone_violations"],
+      "flood_risk": "MEDIUM",
+      "has_major_hospital": true,
+      "silence_zone": true
+    },
+    {
+      "zone_id": 9,
+      "zone_name": "Govindpura / Ashoka Garden",
+      "zone_office_location": "Chandbad, Paani ki Tanki ke paas",
+      "wards": [35, 36, 37, 38, 39],
+      "centroid": [23.2800, 77.4600],
+      "area_type": "industrial_residential",
+      "entry_point": false,
+      "characteristics": "Govindpura is Bhopal's primary industrial area (MP Industrial Development Corporation - MPIDCL zone). Heavy vehicle movement. Ashoka Garden is residential. Gandhi Nagar colony nearby. Industrial effluent complaints should be HIGH priority.",
+      "primary_concerns": ["road_damage", "industrial_pollution", "heavy_traffic", "sanitation"],
+      "flood_risk": "LOW",
+      "industrial_zone": true
+    },
+    {
+      "zone_id": 10,
+      "zone_name": "Arera Colony / 6 Number",
+      "zone_office_location": "Shivaji Nagar Main Market, 6 Number Bus Stop",
+      "wards": [29, 44, 45, 47, 48],
+      "centroid": [23.2200, 77.4320],
+      "area_type": "premium_residential",
+      "entry_point": false,
+      "characteristics": "Upscale planned residential area. Arera Colony is Bhopal's most prestigious address. 6 Number (6 No.) Bus Stop is a key transit node. Bittan Market area. Connected to Rani Kamlapati Station. High civic expectations and awareness.",
+      "primary_concerns": ["water_supply", "park_maintenance", "road_quality", "sanitation"],
+      "flood_risk": "LOW"
+    },
+    {
+      "zone_id": 11,
+      "zone_name": "MP Nagar / 12 Number",
+      "zone_office_location": "12 Number Bus Stop, E-8/815 Paani ki Tanki ke paas",
+      "wards": [49, 50, 51, 52, 53],
+      "centroid": [23.2330, 77.4390],
+      "area_type": "commercial_premium",
+      "entry_point": false,
+      "characteristics": "Central business hub. DB Mall, Board Office Square, Zone 11 area. MP Nagar is the premier commercial district. High-rise buildings, multiplexes, corporate offices. BRTS corridor runs through here. Jyoti Talkies intersection. Very high traffic density.",
+      "primary_concerns": ["traffic", "parking", "footpath_encroachment", "road_damage"],
+      "flood_risk": "LOW",
+      "brts_corridor": true
+    },
+    {
+      "zone_id": 12,
+      "zone_name": "BHEL / Indrapuri",
+      "zone_office_location": "BHEL Zone 12, Carmel Convent School ke paas",
+      "wards": [54, 55, 56, 57, 58],
+      "centroid": [23.2500, 77.4540],
+      "area_type": "industrial_township",
+      "entry_point": false,
+      "characteristics": "BHEL (Bharat Heavy Electricals Limited) township and surrounding areas. Indrapuri colony. Chetak Bridge is a critical bottleneck on the approach road. Mandideep industrial area starts here. Dense population in BHEL colony with organized civic expectations.",
+      "primary_concerns": ["road_damage", "traffic", "water_supply", "sanitation"],
+      "flood_risk": "LOW"
+    },
+    {
+      "zone_id": 13,
+      "zone_name": "Misrod / Sonagiri",
+      "zone_office_location": "Sonagiri Jubilee Gate ke saamne",
+      "wards": [59, 60, 61, 62, 63],
+      "centroid": [23.1950, 77.4600],
+      "area_type": "mixed_developing",
+      "entry_point": false,
+      "characteristics": "Southern developing zone. Misrod, Ratibad, Sonagiri areas. Kolar Road axis. AIIMS Bhopal (All India Institute of Medical Sciences) is the flagship hospital here. Newer colonies with infrastructure still being developed. High growth area.",
+      "primary_concerns": ["road_damage", "water_supply", "open_plots_garbage", "missing_streetlights"],
+      "flood_risk": "LOW",
+      "has_major_hospital": true
+    },
+    {
+      "zone_id": 14,
+      "zone_name": "Karond / Bhanpur",
+      "zone_office_location": "Bhanpur, Karond Dashera Maidan ke paas, Housing Board Police Chowki ke saamne",
+      "wards": [66, 67, 68, 69, 70],
+      "centroid": [23.3150, 77.4600],
+      "area_type": "semi_urban_peripheral",
+      "entry_point": false,
+      "characteristics": "North-eastern periphery. Karond is a major intersection point on Raisen Road. Bhanpur Dumping Ground (Adampur Chhawni landfill) is located here - all garbage complaints near Bhanpur are high sensitivity. Phanda Road passes through. Airport Road connects to Raja Bhoj Airport.",
+      "primary_concerns": ["road_damage", "garbage_dumping", "drainage", "streetlights", "stray_animals"],
+      "flood_risk": "MEDIUM",
+      "has_landfill": true
+    }
+  ],
+
+  "wards": [
+    { "ward_number": 1,  "ward_name": "Mahatma Gandhi",      "zone_id": 1,  "area": "Sant Hirdaram Nagar", "centroid": [23.2900, 77.3400], "aliases": ["SHN Ward 1", "Sant Hirdaram"] },
+    { "ward_number": 2,  "ward_name": "Bairagarh Colony",    "zone_id": 1,  "area": "Sant Hirdaram Nagar", "centroid": [23.2870, 77.3440], "aliases": ["Bairagarh Colony"] },
+    { "ward_number": 3,  "ward_name": "Sant Hirdaram Nagar", "zone_id": 1,  "area": "Sant Hirdaram Nagar", "centroid": [23.2850, 77.3480], "aliases": ["SHN", "Sant Hirdaram Nagar"] },
+    { "ward_number": 4,  "ward_name": "Krishnapura",         "zone_id": 1,  "area": "Krishnapura",         "centroid": [23.2810, 77.3500], "aliases": ["Krishnapura", "Krishnapura Colony"] },
+    { "ward_number": 5,  "ward_name": "Bairagarh",           "zone_id": 2,  "area": "Bairagarh",            "centroid": [23.2750, 77.3380], "aliases": ["Bairagarh Bazar", "Bairagarh Market"] },
+    { "ward_number": 6,  "ward_name": "Halalpur",            "zone_id": 2,  "area": "Bairagarh",            "centroid": [23.2720, 77.3480], "aliases": ["Halalpur", "Halalpur Bus Stand"] },
+    { "ward_number": 7,  "ward_name": "Itwara",              "zone_id": 4,  "area": "Old City",             "centroid": [23.2700, 77.4060], "aliases": ["Itwara", "Itwara Bazar"] },
+    { "ward_number": 8,  "ward_name": "Saket Nagar",         "zone_id": 2,  "area": "Bairagarh Extended",   "centroid": [23.2680, 77.3540], "aliases": ["Saket Nagar"] },
+    { "ward_number": 9,  "ward_name": "Pratap Nagar",        "zone_id": 2,  "area": "Bairagarh Extended",   "centroid": [23.2640, 77.3560], "aliases": ["Pratap Nagar"] },
+    { "ward_number": 10, "ward_name": "Bairagadh Nai Basti", "zone_id": 3,  "area": "Berasia Road North",   "centroid": [23.3100, 77.3920], "aliases": ["Nai Basti", "Bairagadh"] },
+    { "ward_number": 11, "ward_name": "Khajuri Kalan",       "zone_id": 3,  "area": "Khajuri Kalan",        "centroid": [23.3150, 77.3980], "aliases": ["Khajuri Kalan", "Khajuri"] },
+    { "ward_number": 12, "ward_name": "Berasia Road",        "zone_id": 3,  "area": "Berasia Road",         "centroid": [23.3050, 77.4000], "aliases": ["Berasia Road North"] },
+    { "ward_number": 13, "ward_name": "Chhola Mandir",       "zone_id": 3,  "area": "Chhola Road",          "centroid": [23.2980, 77.4020], "aliases": ["Chhola", "Chhola Mandir", "Chhola Road"] },
+    { "ward_number": 14, "ward_name": "Ashoka Garden",       "zone_id": 3,  "area": "Ashoka Garden",        "centroid": [23.2920, 77.4050], "aliases": ["Ashoka Garden", "Ashoka Nagar"] },
+    { "ward_number": 15, "ward_name": "Budhwara",            "zone_id": 4,  "area": "Old City",             "centroid": [23.2680, 77.4020], "aliases": ["Budhwara", "Budhwara Bazar"] },
+    { "ward_number": 16, "ward_name": "Kohefiza",            "zone_id": 4,  "area": "Old City",             "centroid": [23.2640, 77.3980], "aliases": ["Kohefiza", "Koh-e-Fiza"] },
+    { "ward_number": 17, "ward_name": "Sultania",            "zone_id": 4,  "area": "Old City",             "centroid": [23.2720, 77.4000], "aliases": ["Sultania", "Sultania Road"] },
+    { "ward_number": 18, "ward_name": "Lashkar",             "zone_id": 4,  "area": "Old City Lashkar",     "centroid": [23.2660, 77.4040], "aliases": ["Lashkar", "Lashkar Mohalla"] },
+    { "ward_number": 19, "ward_name": "Nishatpura",          "zone_id": 2,  "area": "Nishatpura",           "centroid": [23.2580, 77.3920], "aliases": ["Nishatpura", "Railway Colony Nishatpura"] },
+    { "ward_number": 20, "ward_name": "Shyamla Hills",       "zone_id": 5,  "area": "Shyamla Hills",        "centroid": [23.2590, 77.4000], "aliases": ["Shyamla Hills", "Shyamla"] },
+    { "ward_number": 21, "ward_name": "Tulsi Nagar",         "zone_id": 5,  "area": "Tulsi Nagar",          "centroid": [23.2500, 77.4000], "aliases": ["Tulsi Nagar"] },
+    { "ward_number": 22, "ward_name": "Arera Hills",         "zone_id": 5,  "area": "Arera Hills",          "centroid": [23.2450, 77.4050], "aliases": ["Arera Hills", "Model Road"] },
+    { "ward_number": 23, "ward_name": "Kamla Park",          "zone_id": 5,  "area": "Kamla Park",           "centroid": [23.2530, 77.3950], "aliases": ["Kamla Park", "Kamlapark"] },
+    { "ward_number": 24, "ward_name": "Roshanpura",          "zone_id": 5,  "area": "Roshanpura / New Market", "centroid": [23.2430, 77.4050], "aliases": ["Roshanpura", "New Market area"] },
+    { "ward_number": 25, "ward_name": "Shahpura",            "zone_id": 6,  "area": "Shahpura",             "centroid": [23.2100, 77.4280], "aliases": ["Shahpura", "Shahpura Colony"] },
+    { "ward_number": 26, "ward_name": "Shahpura Lake",       "zone_id": 6,  "area": "Shahpura Lake area",   "centroid": [23.2080, 77.4310], "aliases": ["Shahpura Lake", "Sai Nagar"] },
+    { "ward_number": 27, "ward_name": "Char Imli",           "zone_id": 6,  "area": "Char Imli",            "centroid": [23.2150, 77.4330], "aliases": ["Char Imli", "Char Imli Square"] },
+    { "ward_number": 28, "ward_name": "E-5 Arera Colony",   "zone_id": 6,  "area": "Arera Colony E-5",     "centroid": [23.2200, 77.4260], "aliases": ["E-5", "E5", "Arera E5"] },
+    { "ward_number": 29, "ward_name": "Shivaji Nagar",       "zone_id": 10, "area": "Shivaji Nagar",        "centroid": [23.2250, 77.4360], "aliases": ["Shivaji Nagar", "Shivaji Market"] },
+    { "ward_number": 30, "ward_name": "TT Nagar",            "zone_id": 7,  "area": "TT Nagar",             "centroid": [23.2440, 77.4020], "aliases": ["TT Nagar", "Tatya Tope Nagar", "TT"] },
+    { "ward_number": 31, "ward_name": "New Market",          "zone_id": 7,  "area": "New Market",           "centroid": [23.2410, 77.4070], "aliases": ["New Market", "Naveen Bazar"] },
+    { "ward_number": 32, "ward_name": "Idgah Hills",         "zone_id": 7,  "area": "Idgah Hills",          "centroid": [23.2480, 77.4020], "aliases": ["Idgah Hills", "Idgah"] },
+    { "ward_number": 33, "ward_name": "Sultania Road",       "zone_id": 7,  "area": "Sultania Road",        "centroid": [23.2480, 77.4080], "aliases": ["Sultania Road", "Peer Gate area"] },
+    { "ward_number": 34, "ward_name": "Peer Gate",           "zone_id": 7,  "area": "Peer Gate",            "centroid": [23.2460, 77.4100], "aliases": ["Peer Gate", "Peer Gate Square"] },
+    { "ward_number": 35, "ward_name": "Chandbaad",           "zone_id": 9,  "area": "Chandbaad",            "centroid": [23.2820, 77.4500], "aliases": ["Chandbaad", "Chand Baad"] },
+    { "ward_number": 36, "ward_name": "Govindpura Colony",   "zone_id": 9,  "area": "Govindpura Colony",    "centroid": [23.2780, 77.4550], "aliases": ["Govindpura Colony", "Govindpura Residential"] },
+    { "ward_number": 37, "ward_name": "Govindpura Industrial","zone_id": 9, "area": "Govindpura Industrial", "centroid": [23.2850, 77.4580], "aliases": ["Govindpura Industrial Area", "MPIDCL", "Industrial Estate"] },
+    { "ward_number": 38, "ward_name": "Piplani",             "zone_id": 9,  "area": "Piplani",              "centroid": [23.2760, 77.4620], "aliases": ["Piplani", "Piplani Colony"] },
+    { "ward_number": 39, "ward_name": "Gandhi Nagar",        "zone_id": 9,  "area": "Gandhi Nagar",         "centroid": [23.2800, 77.4640], "aliases": ["Gandhi Nagar", "Gandhi Nagar Colony"] },
+    { "ward_number": 40, "ward_name": "Pul Bogda",           "zone_id": 8,  "area": "Pul Bogda",            "centroid": [23.2510, 77.4260], "aliases": ["Pul Bogda", "Bogda Bridge area"] },
+    { "ward_number": 41, "ward_name": "Hamidia Road",        "zone_id": 8,  "area": "Hamidia Road",         "centroid": [23.2560, 77.4200], "aliases": ["Hamidia Road", "Hamidia", "Hospital Road"] },
+    { "ward_number": 42, "ward_name": "Jahangirabad",        "zone_id": 8,  "area": "Jahangirabad",         "centroid": [23.2520, 77.4150], "aliases": ["Jahangirabad"] },
+    { "ward_number": 43, "ward_name": "Benazir",             "zone_id": 8,  "area": "Benazir",              "centroid": [23.2480, 77.4140], "aliases": ["Benazir", "Benazeer"] },
+    { "ward_number": 44, "ward_name": "6 Number Bus Stop",   "zone_id": 10, "area": "Arera Colony 6 No.",   "centroid": [23.2200, 77.4300], "aliases": ["6 Number", "6 No", "Chhe Number", "6 no bus stop"] },
+    { "ward_number": 45, "ward_name": "Arera Colony E-7",    "zone_id": 10, "area": "Arera Colony E-7",     "centroid": [23.2230, 77.4340], "aliases": ["E-7", "E7", "Arera Colony", "Arera E7"] },
+    { "ward_number": 46, "ward_name": "Nehru Nagar",         "zone_id": 6,  "area": "Nehru Nagar",          "centroid": [23.2180, 77.4260], "aliases": ["Nehru Nagar", "Nehru Nagar Bhopal"] },
+    { "ward_number": 47, "ward_name": "Bittan Market",       "zone_id": 10, "area": "Bittan Market",        "centroid": [23.2150, 77.4250], "aliases": ["Bittan Market", "Bittan", "Bittan Bazaar"] },
+    { "ward_number": 48, "ward_name": "10 Number Bus Stop",  "zone_id": 10, "area": "Arera Colony 10 No.",  "centroid": [23.2185, 77.4320], "aliases": ["10 Number", "10 No", "Das Number", "10 no bus stop"] },
+    { "ward_number": 49, "ward_name": "MP Nagar Zone 1",     "zone_id": 11, "area": "MP Nagar",             "centroid": [23.2310, 77.4360], "aliases": ["MP Nagar", "Madhya Pradesh Nagar"] },
+    { "ward_number": 50, "ward_name": "DB Mall Area",        "zone_id": 11, "area": "MP Nagar / Arera Hills","centroid": [23.2330, 77.4320], "aliases": ["DB Mall", "DB Mall area", "Arera Hills MP Nagar"] },
+    { "ward_number": 51, "ward_name": "Board Office",        "zone_id": 11, "area": "Board Office",         "centroid": [23.2360, 77.4340], "aliases": ["Board Office", "Board Office Square", "Board Office Chowk"] },
+    { "ward_number": 52, "ward_name": "E-8 Sector",          "zone_id": 11, "area": "E-8 Arera Colony",     "centroid": [23.2290, 77.4400], "aliases": ["E-8", "E8", "E-8 Sector"] },
+    { "ward_number": 53, "ward_name": "Ayodhya Bypass",      "zone_id": 11, "area": "Ayodhya Bypass",       "centroid": [23.2200, 77.4450], "aliases": ["Ayodhya Bypass", "Hoshangabad Road"] },
+    { "ward_number": 54, "ward_name": "BHEL Township",       "zone_id": 12, "area": "BHEL Township",        "centroid": [23.2500, 77.4500], "aliases": ["BHEL", "BHEL Township", "BHEL Colony"] },
+    { "ward_number": 55, "ward_name": "Indrapuri",           "zone_id": 12, "area": "Indrapuri",            "centroid": [23.2520, 77.4580], "aliases": ["Indrapuri", "Indrapuri Colony", "Indrapuri C Sector"] },
+    { "ward_number": 56, "ward_name": "Chetak Bridge",       "zone_id": 12, "area": "Chetak Bridge",        "centroid": [23.2355, 77.4385], "aliases": ["Chetak", "Chetak Bridge", "Chetak Chowk"] },
+    { "ward_number": 57, "ward_name": "Barkheda",            "zone_id": 12, "area": "Barkheda",             "centroid": [23.2480, 77.4650], "aliases": ["Barkheda", "Barkheda Pathani"] },
+    { "ward_number": 58, "ward_name": "Bagroda",             "zone_id": 12, "area": "Bagroda",              "centroid": [23.2620, 77.4700], "aliases": ["Bagroda"] },
+    { "ward_number": 59, "ward_name": "Sonagiri",            "zone_id": 13, "area": "Sonagiri",             "centroid": [23.2050, 77.4560], "aliases": ["Sonagiri"] },
+    { "ward_number": 60, "ward_name": "Misrod",              "zone_id": 13, "area": "Misrod",               "centroid": [23.1980, 77.4600], "aliases": ["Misrod", "Misrod Colony"] },
+    { "ward_number": 61, "ward_name": "Ratibad",             "zone_id": 13, "area": "Ratibad",              "centroid": [23.1880, 77.4550], "aliases": ["Ratibad"] },
+    { "ward_number": 62, "ward_name": "Kolar Road",          "zone_id": 13, "area": "Kolar Road",           "centroid": [23.2000, 77.4700], "aliases": ["Kolar Road", "Kolar"] },
+    { "ward_number": 63, "ward_name": "AIIMS Campus",        "zone_id": 13, "area": "AIIMS Bhopal area",    "centroid": [23.1900, 77.4550], "aliases": ["AIIMS", "AIIMS Bhopal", "Saket Nagar South"] },
+    { "ward_number": 64, "ward_name": "Nishatpura Colony",   "zone_id": 8,  "area": "Nishatpura",           "centroid": [23.2590, 77.4190], "aliases": ["Nishatpura Colony"] },
+    { "ward_number": 65, "ward_name": "Habibganj",           "zone_id": 8,  "area": "Habibganj / Rani Kamlapati", "centroid": [23.2240, 77.4350], "aliases": ["Habibganj", "Rani Kamlapati area", "Railway Station South"] },
+    { "ward_number": 66, "ward_name": "Bhanpur",             "zone_id": 14, "area": "Bhanpur",              "centroid": [23.3050, 77.4600], "aliases": ["Bhanpur", "Bhanpur Dump", "Adampur Chhawni area"] },
+    { "ward_number": 67, "ward_name": "Karond",              "zone_id": 14, "area": "Karond",               "centroid": [23.3100, 77.4550], "aliases": ["Karond", "Karond Circle", "Karond Square"] },
+    { "ward_number": 68, "ward_name": "Khajuri Sadak",       "zone_id": 14, "area": "Khajuri Sadak",        "centroid": [23.3200, 77.4500], "aliases": ["Khajuri Sadak", "Khajuri Road"] },
+    { "ward_number": 69, "ward_name": "Phanda Road",         "zone_id": 14, "area": "Phanda Road",          "centroid": [23.3280, 77.4450], "aliases": ["Phanda", "Phanda Road"] },
+    { "ward_number": 70, "ward_name": "Airport Road",        "zone_id": 14, "area": "Airport Road area",    "centroid": [23.2850, 77.4350], "aliases": ["Airport Road", "Airport area", "Raja Bhoj Airport area"] },
+    { "ward_number": 71, "ward_name": "Kolar Ward 1",        "zone_id": 13, "area": "Kolar",                "centroid": [23.1850, 77.4800], "aliases": ["Kolar"] },
+    { "ward_number": 72, "ward_name": "Kolar Ward 2",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1820, 77.4850], "aliases": [] },
+    { "ward_number": 73, "ward_name": "Kolar Ward 3",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1790, 77.4900], "aliases": [] },
+    { "ward_number": 74, "ward_name": "Kolar Ward 4",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1760, 77.4950], "aliases": [] },
+    { "ward_number": 75, "ward_name": "Kolar Ward 5",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1730, 77.5000], "aliases": [] },
+    { "ward_number": 76, "ward_name": "Kolar Ward 6",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1700, 77.5050], "aliases": [] },
+    { "ward_number": 77, "ward_name": "Kolar Ward 7",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1670, 77.5100], "aliases": [] },
+    { "ward_number": 78, "ward_name": "Kolar Ward 8",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1640, 77.5150], "aliases": [] },
+    { "ward_number": 79, "ward_name": "Kolar Ward 9",        "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1610, 77.5200], "aliases": [] },
+    { "ward_number": 80, "ward_name": "Kolar Ward 10",       "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1580, 77.5250], "aliases": [] },
+    { "ward_number": 81, "ward_name": "Kolar Ward 11",       "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1550, 77.5300], "aliases": [] },
+    { "ward_number": 82, "ward_name": "Kolar Ward 12",       "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1520, 77.5350], "aliases": [] },
+    { "ward_number": 83, "ward_name": "Kolar Ward 13",       "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1490, 77.5400], "aliases": [] },
+    { "ward_number": 84, "ward_name": "Kolar Ward 14",       "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1460, 77.5450], "aliases": [] },
+    { "ward_number": 85, "ward_name": "Kolar Ward 15",       "zone_id": 13, "area": "Kolar Extended",       "centroid": [23.1430, 77.5500], "aliases": [] }
+  ],
+
+  "departments": {
+    "Sanitation": {
+      "id": "DEPT_SAN_01",
+      "agency": "BMC Health Department",
+      "assigned_role": "Zonal Health Officer (ZHO)",
+      "contact_escalation": "BMC Control Room: 0755-2551700",
+      "keywords": [
+        "garbage", "waste", "sewage", "drain", "dead animal", "kachra", "bad smell",
+        "dustbin", "safai", "naali", "nali", "gutter", "sewer", "manhole", "badbu",
+        "gandgi", "kachra nahi utha", "safai nahi", "nali jam", "naali bhari",
+        "kuda", "kuuda", "sweeping", "dead dog", "dead cow", "carcass",
+        "open defecation", "plastic waste", "industrial waste near residential"
+      ],
+      "priority_logic": "CRITICAL if near Upper Lake (Bada Talab), Lower Lake, or any water body. CRITICAL if near Hamidia Hospital or AIIMS Bhopal (infection risk). HIGH if garbage uncollected for more than 24 hours. HIGH if open manhole on a busy road (safety risk). HIGH if near Bhanpur dumping ground overspill."
+    },
+    "Traffic": {
+      "id": "DEPT_TRA_02",
+      "agency": "Bhopal Traffic Police",
+      "assigned_role": "DCP Traffic",
+      "contact_escalation": "Traffic Control Room: 0755-2443999 / 100",
+      "keywords": [
+        "signal", "jam", "jaam", "parking", "accident", "congestion", "red light", "blocked",
+        "challan", "overtaking", "wrong side", "no parking", "vehicle breakdown", "tractor",
+        "bus stop blocked", "divider broken", "zebra crossing", "speed breaker",
+        "road block", "protest rasta roko", "vip movement", "BRTS lane blocked",
+        "freight vehicle day ban", "auto rickshaw stand", "encroachment road"
+      ],
+      "priority_logic": "CRITICAL if blocking BRTS corridor (MP Nagar to Misrod stretch). CRITICAL if blocking VIP Road or near Raj Bhawan during official movement. CRITICAL if accident with injury. HIGH if blocking DB Mall Square, Board Office Square, or any key intersection. HIGH if BRTS bus unable to pass. HIGH if blocking hospital access (Hamidia, AIIMS)."
+    },
+    "Public_Works": {
+      "id": "DEPT_PWD_03",
+      "agency": "PWD / BMC Civil Engineering",
+      "assigned_role": "Ward Executive Engineer",
+      "contact_escalation": "BMC PWD: 0755-2571000",
+      "keywords": [
+        "pothole", "khadda", "khaddaa", "gadda", "road broken", "bridge", "pavement",
+        "water leak", "pipe burst", "road tuta", "road tooti", "puliya", "pul",
+        "pathar", "patthar", "drain overflow", "construction debris", "road cave in",
+        "footpath broken", "divider damaged", "road marking faded", "speed breaker missing",
+        "nala overflow", "retaining wall", "building collapse", "slope failure"
+      ],
+      "priority_logic": "CRITICAL if road cave-in or bridge structural issue. CRITICAL if main water pipe burst causing road flooding. HIGH if pothole on Hoshangabad Road (Narmadapuram Road), Raisen Road, Berasia Road, or BRTS corridor. HIGH if near Chetak Bridge (major bottleneck). HIGH if pothole causing accidents."
+    },
+    "Electricity": {
+      "id": "DEPT_ELE_04",
+      "agency": "MPMKVVCL (MP Madhya Kshetra Vidyut Vitaran Company Ltd)",
+      "assigned_role": "Assistant Engineer (Zone)",
+      "contact_escalation": "MPMKVVCL Helpline: 1912 | Emergency: 0755-2761444",
+      "keywords": [
+        "power cut", "bijli", "bijli nahi", "sparking", "wire", "streetlight",
+        "andhera", "transformer", "taar", "light nahi", "light band", "current aata nahi",
+        "meter", "high voltage", "low voltage", "bijli ka taar", "open wire",
+        "live wire", "pole gira", "transformer blast", "feeder trip",
+        "UPS failure", "generator", "electricity theft"
+      ],
+      "priority_logic": "CRITICAL if live or sparking wires near residential areas, schools, or water bodies. CRITICAL if transformer fire or blast. HIGH if streetlights out on VIP Road or near Raj Bhawan. HIGH if power cut affecting hospital (Hamidia/AIIMS) backup. HIGH if power cut affecting water pumping station. MEDIUM if residential area streetlight out."
+    },
+    "Water_Supply": {
+      "id": "DEPT_WAT_05",
+      "agency": "BMC Water Supply Department / BWSSB",
+      "assigned_role": "Zonal Water Engineer",
+      "contact_escalation": "BMC Water Helpline: 1800-233-4444",
+      "keywords": [
+        "paani nahi", "water nahi", "paani aata nahi", "no water", "water supply",
+        "paani ka pressure kam", "low pressure", "paani ganda", "dirty water",
+        "water contamination", "paani mein keede", "pipe leak", "water tanker",
+        "tanker nahi aaya", "borewell", "hand pump", "paani band", "water motor"
+      ],
+      "priority_logic": "CRITICAL if water contamination or dirty water supply (public health risk). HIGH if entire colony without water for more than 12 hours. HIGH if water tanker not reaching slum/JJ cluster. MEDIUM if low pressure issue in planned colony. LOW if single household complaint."
+    },
+    "Parks_Environment": {
+      "id": "DEPT_PRK_06",
+      "agency": "BMC Parks Department / MPPCB",
+      "assigned_role": "Zonal Parks Officer / MPPCB Regional Officer",
+      "contact_escalation": "MPPCB Bhopal: 0755-2557600",
+      "keywords": [
+        "park", "bagicha", "garden", "maidan", "tree", "ped", "tree fell",
+        "park equipment broken", "swing broken", "street tree encroachment",
+        "dust pollution", "dhuan", "dhuaan", "smoke factory", "industrial smoke",
+        "noise pollution", "construction noise", "crackers at night", "air pollution",
+        "lake pollution", "lake mein kachra", "plastic in lake", "Upper Lake garbage"
+      ],
+      "priority_logic": "CRITICAL if pollution near Upper Lake or any water body. HIGH if large tree fallen blocking road. HIGH if industrial smoke complaint from Govindpura. MEDIUM if park equipment broken. LOW if tree trimming request."
+    },
+    "Animal_Control": {
+      "id": "DEPT_ANM_07",
+      "agency": "BMC Animal Husbandry / Veterinary Department",
+      "assigned_role": "BMC Veterinary Officer",
+      "contact_escalation": "BMC Animal Helpline: 0755-2551700",
+      "keywords": [
+        "aawara kutta", "stray dog", "dog bite", "kutte ne kaata", "aawara gaay",
+        "stray cow", "cow on road", "aawara janwar", "sanand", "bull on road",
+        "saand", "animal on highway", "dead animal", "mara janwar", "rabies"
+      ],
+      "priority_logic": "CRITICAL if dog bite incident (requires immediate veterinary response and anti-rabies). CRITICAL if bull or large stray animal causing traffic accidents. HIGH if pack of aggressive stray dogs in residential area. HIGH if dead animal on main road. MEDIUM if stray animals near market or school."
+    },
+    "Building_Planning": {
+      "id": "DEPT_BLD_08",
+      "agency": "BMC Building Permission / Town & Country Planning",
+      "assigned_role": "BMC Building Inspector",
+      "contact_escalation": "BMC Building: 0755-2551700 ext 3",
+      "keywords": [
+        "encroachment", "kabza", "illegal construction", "building collapse", "building unsafe",
+        "andhila", "illegal floor", "map violation", "building bye-law", "demolition order",
+        "hawker", "rehdi", "khomcha", "footpath blocked", "road occupied", "shop expanded",
+        "jhuggi", "slum", "parking encroachment", "plot dispute"
+      ],
+      "priority_logic": "CRITICAL if building collapse or imminent collapse risk. HIGH if encroachment blocking emergency vehicle access. HIGH if illegal construction on road ROW. MEDIUM if hawker/vendor encroachment. LOW if general encroachment on park or public space."
+    }
+  },
+
+  "landmarks": [
+    {
+      "name": "DB Mall",
+      "aliases": ["DB City", "D B Mall", "DB City Mall"],
+      "coordinates": [23.2323, 77.4312],
+      "zone_id": 11,
+      "ward_number": 50,
+      "tags": ["Traffic", "Commercial", "BRTS"],
+      "priority_modifier": "Any traffic complaint within 500m of DB Mall auto-escalates to HIGH due to extreme pedestrian and vehicle density."
+    },
+    {
+      "name": "Board Office Square",
+      "aliases": ["Board Office", "Board Office Chowk", "Board Office Tiraha"],
+      "coordinates": [23.2360, 77.4340],
+      "zone_id": 11,
+      "ward_number": 51,
+      "tags": ["Traffic", "Key Intersection"],
+      "priority_modifier": "Critical traffic node. Any blockage here affects 4 major arterial routes."
+    },
+    {
+      "name": "Jyoti Talkies",
+      "aliases": ["Jyoti Cinema", "Jyoti Talkies Chowk"],
+      "coordinates": [23.2310, 77.4340],
+      "zone_id": 11,
+      "ward_number": 49,
+      "tags": ["Traffic Node", "Commercial"]
+    },
+    {
+      "name": "Hamidia Hospital",
+      "aliases": ["Hamidia", "Government Hospital Hamidia", "Hamidia Aspatal"],
+      "coordinates": [23.2640, 77.3890],
+      "zone_id": 8,
+      "ward_number": 41,
+      "tags": ["Emergency", "Silence Zone", "Hospital", "Critical Infrastructure"],
+      "priority_modifier": "CRITICAL for all complaints. This is the largest government hospital. Any road blockage, power failure, or sanitation issue here is auto-escalated to CRITICAL."
+    },
+    {
+      "name": "AIIMS Bhopal",
+      "aliases": ["AIIMS", "All India Institute of Medical Sciences Bhopal"],
+      "coordinates": [23.1883, 77.4288],
+      "zone_id": 13,
+      "ward_number": 63,
+      "tags": ["Emergency", "Silence Zone", "Hospital", "Critical Infrastructure"],
+      "priority_modifier": "CRITICAL for all complaints near this location."
+    },
+    {
+      "name": "Rani Kamlapati Station",
+      "aliases": ["Habibganj Station", "Rani Kamlapati Railway Station", "Habibganj Railway Station", "Railway Station Bhopal South"],
+      "coordinates": [23.2240, 77.4350],
+      "zone_id": 8,
+      "ward_number": 65,
+      "tags": ["Transit Hub", "Traffic"],
+      "priority_modifier": "HIGH for traffic and cleanliness. Major inter-city transit hub."
+    },
+    {
+      "name": "Bhopal Junction Railway Station",
+      "aliases": ["Bhopal Station", "Main Station", "Junction"],
+      "coordinates": [23.2606, 77.4120],
+      "zone_id": 8,
+      "ward_number": 40,
+      "tags": ["Transit Hub", "Traffic", "Heritage"],
+      "priority_modifier": "HIGH for traffic and cleanliness. Main colonial-era railway station."
+    },
+    {
+      "name": "10 Number Bus Stop",
+      "aliases": ["10 No", "10 Number", "Das Number Stop"],
+      "coordinates": [23.2185, 77.4322],
+      "zone_id": 10,
+      "ward_number": 48,
+      "tags": ["Market", "Encroachment", "Transit"]
+    },
+    {
+      "name": "Bittan Market",
+      "aliases": ["Bittan Bazar", "Bittan"],
+      "coordinates": [23.2150, 77.4250],
+      "zone_id": 10,
+      "ward_number": 47,
+      "tags": ["Sanitation", "Traffic", "Market"]
+    },
+    {
+      "name": "6 Number Bus Stop",
+      "aliases": ["6 No", "Chhe Number", "6 No Stop", "Shivaji Nagar Bus Stop"],
+      "coordinates": [23.2200, 77.4300],
+      "zone_id": 10,
+      "ward_number": 44,
+      "tags": ["Transit", "Traffic"]
+    },
+    {
+      "name": "VIP Road",
+      "aliases": ["VIP Marg", "Shyamla Hills Road"],
+      "coordinates": [23.2575, 77.3872],
+      "zone_id": 5,
+      "ward_number": 20,
+      "tags": ["Tourism", "Speeding", "VIP Zone", "Lake Adjacent"],
+      "priority_modifier": "HIGH for any complaint due to VIP security and tourism sensitivity. Speeding complaints near lakes are CRITICAL for safety."
+    },
+    {
+      "name": "Bada Talab / Raja Bhoj Statue",
+      "aliases": ["Upper Lake", "Bada Talab", "Bhojtal", "Raja Bhoj ki Murti"],
+      "coordinates": [23.2560, 77.3850],
+      "zone_id": 5,
+      "ward_number": 23,
+      "tags": ["Water Body", "Sanitation", "Critical Ecological Zone", "Tourism"],
+      "priority_modifier": "Any sanitation, garbage, or pollution complaint mentioning this location is auto-CRITICAL."
+    },
+    {
+      "name": "Kamla Park",
+      "aliases": ["Kamlapark"],
+      "coordinates": [23.2520, 77.3940],
+      "zone_id": 5,
+      "ward_number": 23,
+      "tags": ["Heritage", "Traffic", "Park"]
+    },
+    {
+      "name": "New Market",
+      "aliases": ["Naveen Bazar", "New Bazar"],
+      "coordinates": [23.2410, 77.4070],
+      "zone_id": 7,
+      "ward_number": 31,
+      "tags": ["Commercial", "Traffic", "Sanitation", "Encroachment"]
+    },
+    {
+      "name": "TT Nagar Stadium",
+      "aliases": ["TT Nagar Stadium", "Aishbagh Stadium"],
+      "coordinates": [23.2430, 77.4030],
+      "zone_id": 7,
+      "ward_number": 30,
+      "tags": ["Stadium", "Events", "Traffic"]
+    },
+    {
+      "name": "Chetak Bridge",
+      "aliases": ["Chetak Pul", "Chetak"],
+      "coordinates": [23.2355, 77.4385],
+      "zone_id": 12,
+      "ward_number": 56,
+      "tags": ["Bottleneck", "PWD", "Traffic"],
+      "priority_modifier": "HIGH for all traffic and road complaints. Only major link between MP Nagar and BHEL zones. Any blockage causes city-wide cascade."
+    },
+    {
+      "name": "BHEL Gate No 1",
+      "aliases": ["BHEL Gate 1", "BHEL Gate", "BHEL Main Gate"],
+      "coordinates": [23.2500, 77.4500],
+      "zone_id": 12,
+      "ward_number": 54,
+      "tags": ["Industrial Transit", "Shift Traffic"]
+    },
+    {
+      "name": "Bairagarh Cloth Market",
+      "aliases": ["Bairagarh Market", "Cloth Market Bairagarh"],
+      "coordinates": [23.2750, 77.3350],
+      "zone_id": 2,
+      "ward_number": 5,
+      "tags": ["Commercial", "Traffic", "Wholesale"]
+    },
+    {
+      "name": "Halalpur Bus Stand",
+      "aliases": ["Halalpur", "Halalpur Stand"],
+      "coordinates": [23.2700, 77.3500],
+      "zone_id": 2,
+      "ward_number": 6,
+      "tags": ["Transit Hub", "Inter-city Bus"]
+    },
+    {
+      "name": "Indrapuri C-Sector",
+      "aliases": ["Indrapuri C Sector", "C Sector Indrapuri"],
+      "coordinates": [23.2505, 77.4612],
+      "zone_id": 12,
+      "ward_number": 55,
+      "tags": ["Residential", "Sanitation"]
+    },
+    {
+      "name": "Karond Circle",
+      "aliases": ["Karond Chowk", "Karond Square"],
+      "coordinates": [23.3100, 77.4550],
+      "zone_id": 14,
+      "ward_number": 67,
+      "tags": ["Traffic", "Raisen Road Junction"]
+    },
+    {
+      "name": "Shahpura Lake",
+      "aliases": ["Shahpura Talab"],
+      "coordinates": [23.2050, 77.4280],
+      "zone_id": 6,
+      "ward_number": 26,
+      "tags": ["Water Body", "Ecological", "Park"],
+      "priority_modifier": "HIGH for sanitation near this lake."
+    },
+    {
+      "name": "Govindpura Industrial Area",
+      "aliases": ["MPIDCL", "Govindpura Industrial Estate", "Govindpura Factory Area"],
+      "coordinates": [23.2850, 77.4580],
+      "zone_id": 9,
+      "ward_number": 37,
+      "tags": ["Industrial", "Pollution", "Heavy Vehicle"],
+      "priority_modifier": "HIGH for pollution and road damage complaints due to heavy vehicle movement."
+    },
+    {
+      "name": "Raj Bhawan",
+      "aliases": ["Governor House", "Raj Bhavan"],
+      "coordinates": [23.2618, 77.4020],
+      "zone_id": 5,
+      "ward_number": 20,
+      "tags": ["VIP Zone", "Security Perimeter"],
+      "priority_modifier": "CRITICAL for all complaints. Governor's residence - security sensitive."
+    },
+    {
+      "name": "CM Residence (Shyamla Hills)",
+      "aliases": ["Chief Minister Residence", "CM House Bhopal"],
+      "coordinates": [23.2600, 77.4010],
+      "zone_id": 5,
+      "ward_number": 20,
+      "tags": ["VIP Zone", "Security Perimeter"],
+      "priority_modifier": "CRITICAL for all complaints."
+    },
+    {
+      "name": "MP Nagar Zone 1 / Zone 2",
+      "aliases": ["MP Nagar Zone 1", "MP Nagar Zone 2", "MP Nagar"],
+      "coordinates": [23.2330, 77.4330],
+      "zone_id": 11,
+      "ward_number": 49,
+      "tags": ["Commercial Hub", "BRTS", "Traffic"]
+    },
+    {
+      "name": "Char Imli Flyover",
+      "aliases": ["Char Imli", "Char Imli Bridge"],
+      "coordinates": [23.2150, 77.4330],
+      "zone_id": 6,
+      "ward_number": 27,
+      "tags": ["Traffic", "Key Intersection"]
+    },
+    {
+      "name": "Bhopal Gas Tragedy Memorial",
+      "aliases": ["Union Carbide Site", "Gas Tragedy Site", "Gas Kand Site", "ICMR Institute"],
+      "coordinates": [23.2688, 77.4300],
+      "zone_id": 4,
+      "ward_number": 18,
+      "tags": ["Heritage", "Sensitive Area", "Memorial"],
+      "priority_modifier": "HIGH sensitivity for any pollution or environmental complaint near this site."
+    },
+    {
+      "name": "Bhopal Talkies",
+      "aliases": ["Bhopal Talkies Chowk", "Bhopal Talkies Square"],
+      "coordinates": [23.2640, 77.4100],
+      "zone_id": 8,
+      "ward_number": 40,
+      "tags": ["Traffic", "Old City Junction"]
+    }
+  ],
+
+  "road_network": {
+    "arterial_roads": [
+      {
+        "name": "Hoshangabad Road (Narmadapuram Road)",
+        "aliases": ["Hoshangabad Road", "Narmadapuram Road", "NH-47 South"],
+        "route": "Rani Kamlapati Station → AIIMS → Misrod → Hoshangabad",
+        "priority": "HIGH",
+        "note": "Primary route to south MP. Any pothole here is HIGH priority."
+      },
+      {
+        "name": "Raisen Road",
+        "aliases": ["Raisen Road", "NH-146"],
+        "route": "Karond → Bhopal Junction → Raisen",
+        "priority": "HIGH",
+        "note": "Primary east exit. Connects to Sanchi."
+      },
+      {
+        "name": "Berasia Road",
+        "aliases": ["Berasia Road"],
+        "route": "Bhopal Junction → Berasia",
+        "priority": "HIGH",
+        "note": "North exit route."
+      },
+      {
+        "name": "Kolar Road",
+        "aliases": ["Kolar Road"],
+        "route": "MP Nagar → Misrod → Kolar",
+        "priority": "MEDIUM",
+        "note": "Rapidly developing southern corridor."
+      },
+      {
+        "name": "BRTS Corridor",
+        "aliases": ["BRTS", "Bus Rapid Transit", "BRTS Lane", "BRTS Road"],
+        "route": "Board Office → MP Nagar → Chetak Bridge → BHEL → Govindpura",
+        "priority": "CRITICAL",
+        "note": "Dedicated bus lane. Any encroachment or blockage of BRTS lane is CRITICAL. Shared with high-frequency city buses."
+      },
+      {
+        "name": "Ayodhya Bypass",
+        "aliases": ["Ayodhya Bypass", "Outer Ring Road partial"],
+        "route": "Bairagarh → Ayodhya Nagar → Hoshangabad Road",
+        "priority": "HIGH",
+        "note": "Key bypass road avoiding city center."
+      }
+    ]
+  },
+
+  "sensitive_zones": [
+    {
+      "type": "ECOLOGICAL",
+      "name": "Upper Lake Buffer Zone",
+      "radius_meters": 500,
+      "center": [23.2680, 77.3726],
+      "rule": "Any complaint mentioning Upper Lake, Bada Talab, or Bhojtal → CRITICAL for Sanitation. CRITICAL for any chemical/industrial discharge."
+    },
+    {
+      "type": "MEDICAL",
+      "name": "Hamidia Hospital Silence Zone",
+      "radius_meters": 200,
+      "center": [23.2640, 77.3890],
+      "rule": "Noise complaints are HIGH priority. Road blockage is CRITICAL. Power failure is CRITICAL."
+    },
+    {
+      "type": "MEDICAL",
+      "name": "AIIMS Bhopal Silence Zone",
+      "radius_meters": 200,
+      "center": [23.1883, 77.4288],
+      "rule": "Same rules as Hamidia Hospital."
+    },
+    {
+      "type": "VIP",
+      "name": "Raj Bhawan Security Perimeter",
+      "radius_meters": 300,
+      "center": [23.2618, 77.4020],
+      "rule": "All complaints CRITICAL. Alert security agencies."
+    },
+    {
+      "type": "ENVIRONMENTAL",
+      "name": "Bhanpur Landfill Boundary",
+      "radius_meters": 1000,
+      "center": [23.3050, 77.4600],
+      "rule": "Leachate or garbage overflow from landfill is CRITICAL. Escalate to NGT-monitored status."
+    }
+  ],
+
+  "flood_prone_areas": [
+    {
+      "area_name": "Old City Nala Network",
+      "wards": [7, 15, 16, 17, 18],
+      "season": "Monsoon (July-September)",
+      "risk": "HIGH",
+      "note": "Ancient narrow drain network gets overwhelmed. Waterlogging in itwara, Budhwara, Kohefiza every monsoon."
+    },
+    {
+      "area_name": "Bairagarh Low-lying Areas",
+      "wards": [5, 6, 8],
+      "season": "Monsoon",
+      "risk": "MEDIUM",
+      "note": "Areas near Bairagarh Nala."
+    },
+    {
+      "area_name": "Berasia Road Underpasses",
+      "wards": [10, 11, 12],
+      "season": "Monsoon",
+      "risk": "HIGH",
+      "note": "Railway underpasses flood during heavy rain. CRITICAL if vehicles submerged."
+    },
+    {
+      "area_name": "Hamidia Road Area",
+      "wards": [40, 41, 42],
+      "season": "Monsoon",
+      "risk": "MEDIUM",
+      "note": "Low-lying Pul Bogda area floods with continuous rain."
+    }
+  ],
+
+  "emergency_escalation_rules": {
+    "auto_critical_keywords": [
+      "aag", "आग", "fire", "burning", "jal raha", "jal rahi",
+      "baarish mein doob", "flood", "paani bhar gaya sadak mein",
+      "bijli ka taar gira", "live wire", "taar neeche aa gaya",
+      "building gir gayi", "building gir rahi", "chhath gir gayi",
+      "accident", "maut", "death", "ambulance", "hospital emergency",
+      "gas leak", "gas nikal raha", "suicid", "koi mar raha",
+      "blast", "bomb", "danga", "riot", "loot",
+      "transformer blast", "transformer mein aag"
+    ],
+    "auto_emergency_departments": ["Fire Brigade: 101", "Police: 100 / 112", "Ambulance: 108", "BMC Emergency: 1800-233-4444"]
+  },
+
+  "system_rules": {
+    "zone_count_correction": "This city has 14 zones (NOT 19). Any reference to 15-19 zones is incorrect. Always use zones 1-14 only.",
+    "ward_number_resolution": "If user mentions a ward number directly (e.g. 'Ward 50' or 'Ward no. 50'), look it up in the wards array and use its zone_id and centroid for location assignment.",
+    "ward_name_resolution": "If user mentions a ward name or area name (e.g. 'Arera Colony' or 'MP Nagar'), fuzzy-match it against ward_name, area, and aliases fields in the wards array.",
+    "landmark_resolution": "When a landmark from the landmarks array is mentioned, ALWAYS use its exact coordinates and zone_id. Do NOT use approximate coordinates.",
+    "missing_location_protocol": "Scan user text for ANY landmark, ward name, area name, or alias in this file. If found, automatically assign the matched coordinates and zone. If not found, return null for coordinates and 'Location Not Specified' for ward.",
+    "proximity_awareness": "If an incident occurs at a transit hub (Rani Kamlapati, Halalpur Bus Stand, Chetak Bridge), automatically flag connected zones as 'At Risk' for secondary traffic jams.",
+    "lake_proximity_rule": "Any complaint mentioning Upper Lake, Lower Lake, Shahpura Lake, or Kerwa Dam → auto-escalate department to Parks_Environment + Sanitation joint. Set priority to CRITICAL.",
+    "brts_rule": "Any complaint mentioning BRTS, Bus Rapid Transit, or occurring on BRTS corridor roads → flag as traffic_critical. Alert Traffic DCP.",
+    "kolar_wards_note": "Wards 71-85 are the Kolar wards merged into BMC in 2015. Zone assignment is Zone 13. Coordinates are approximate - use Kolar area centroid [23.185, 77.490] if no specific landmark found.",
+    "spam_rejection": {
+      "reject_if_true": [
+        "Message contains only greetings from slang_dictionary with no issue described",
+        "Word count less than 4 and no image attached",
+        "Message is only a phone number or numeric string",
+        "Message contains only bhiya/bhai/ji with no grievance"
+      ]
+    },
+    "chronic_issue_flag": {
+      "trigger_phrases": ["bahut din se", "kaafi time se", "baar baar", "pichhle mahine se", "saalon se", "kab hoga"],
+      "action": "Flag grievance as CHRONIC. Increase priority by one level. Note in classification that this may be a repeat/unresolved complaint."
+    }
+  }
+}

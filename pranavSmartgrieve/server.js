@@ -1,0 +1,53 @@
+const dotenv = require("dotenv").config();
+const app = require("./src/config/app");
+const connectDB = require("./src/database/db");
+const { initCron } = require("./src/services/cron.service");
+
+connectDB();
+initCron();
+
+const http = require("http");
+const { Server } = require("socket.io");
+
+const server = http.createServer(app);
+
+const socketOrigins = process.env.CLIENT_URL
+    ? [process.env.CLIENT_URL, "http://localhost:5173", "http://localhost:5174"]
+    : ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174"];
+
+const io = new Server(server, {
+    cors: {
+        origin: socketOrigins,
+        credentials: true
+    }
+});
+
+app.set('io', io);
+
+io.on("connection", (socket) => {
+    console.log("New client connected:", socket.id);
+    
+    socket.on("join_room", (department) => {
+        if (department) {
+            const roomName = `dept_${department}`;
+            socket.join(roomName);
+            console.log(`Socket ${socket.id} joined room ${roomName}`);
+        }
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Client disconnected:", socket.id);
+    });
+});
+
+server.listen(process.env.PORT || 3000, () => {
+    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+});
