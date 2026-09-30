@@ -40,7 +40,9 @@ const createTransporter = async () => {
     });
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         type: 'OAuth2',
         user: process.env.OAUTH_EMAIL,
@@ -48,7 +50,8 @@ const createTransporter = async () => {
         clientId: process.env.OAUTH_CLIENT_ID,
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         refreshToken: process.env.OAUTH_REFRESH_TOKEN
-      }
+      },
+      family: 4 // Force IPv4 to prevent Render ENETUNREACH on IPv6
     });
 
     return transporter;
