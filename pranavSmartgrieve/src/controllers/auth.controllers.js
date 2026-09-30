@@ -51,7 +51,7 @@ const registerController = async (req, res) => {
         // Send OTP email
         await sendEmail(
             newUser.email,
-            `Your GrievAI Verification Code — ${otpCode}`,
+            `Your SmartGrieve Verification Code — ${otpCode}`,
             otpEmailTemplate(newUser.name, otpCode)
         );
 
@@ -216,7 +216,7 @@ const verifyOtpController = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Email verified successfully. Welcome to GrievAI.",
+            message: "Email verified successfully. Welcome to SmartGrieve.",
             token,
             user: {
                 id: user._id,
@@ -262,7 +262,7 @@ const resendOtpController = async (req, res) => {
 
         await sendEmail(
             user.email,
-            `Your GrievAI Verification Code — ${otpCode}`,
+            `Your SmartGrieve Verification Code — ${otpCode}`,
             otpEmailTemplate(user.name, otpCode)
         );
 
@@ -304,7 +304,7 @@ const forgotPasswordController = async (req, res) => {
         const { forgotPasswordOtpTemplate } = require("../utils/emailTemplates");
         await sendEmail(
             user.email,
-            "Reset Your GrievAI Password",
+            "Reset Your SmartGrieve Password",
             forgotPasswordOtpTemplate(user.name, otpCode)
         );
 
@@ -396,7 +396,7 @@ const resetPasswordController = async (req, res) => {
         const { passwordChangedTemplate } = require("../utils/emailTemplates");
         await sendEmail(
             user.email,
-            "GrievAI Password Changed",
+            "SmartGrieve Password Changed",
             passwordChangedTemplate(user.name)
         );
 

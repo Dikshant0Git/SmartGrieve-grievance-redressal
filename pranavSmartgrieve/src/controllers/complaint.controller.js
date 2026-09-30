@@ -445,7 +445,7 @@ const updateComplaintController = async (req, res) => {
             const whatsappId = popDoc.citizen?.mobileNo || popDoc.userId;
             if (whatsappId) {
                 const { sendWhatsAppMessage } = require("../services/whatsapp.service");
-                const msg = `🔔 *Update on Your Complaint*\nTicket: \`${popDoc.grievanceId}\`\n\nStatus changed from *${oldStatus}* to *${status}*.\n\n👤 *Officer:* ${officerName}\n📝 *Note:* ${finalNote}\n\n_Dhanyavad, GrievAI Bhopal._`;
+                const msg = `🔔 *Update on Your Complaint*\nTicket: \`${popDoc.grievanceId}\`\n\nStatus changed from *${oldStatus}* to *${status}*.\n\n👤 *Officer:* ${officerName}\n📝 *Note:* ${finalNote}\n\n_Dhanyavad, SmartGrieve Bhopal._`;
                 await sendWhatsAppMessage(whatsappId, msg).catch(err => console.error('❌ Status WhatsApp failed:', err.message));
             }
         });

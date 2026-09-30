@@ -94,7 +94,7 @@ const sendEmail = async (toOrOptions, subjectParam, htmlParam) => {
     try {
         const transporter = await createTransporter();
         const payload = {
-            from: `"SmartGrieve" <${process.env.OAUTH_EMAIL}>`,
+            from: `"SmartGrieve No-Reply" <${process.env.OAUTH_EMAIL}>`,
             to: Array.isArray(to) ? to.join(', ') : to,
             subject,
             ...(html ? { html } : {}),
@@ -116,7 +116,7 @@ const sendEmail = async (toOrOptions, subjectParam, htmlParam) => {
 const sendOTPEmail = async ({ to, name, otp }) => {
     return sendEmail({
         to,
-        subject: `Your GrievAI Verification Code — ${otp}`,
+        subject: `Your SmartGrieve Verification Code — ${otp}`,
         html: otpEmailTemplate(name, otp)
     });
 };
@@ -127,7 +127,7 @@ const sendOTPEmail = async ({ to, name, otp }) => {
 const sendPasswordResetEmail = async ({ to, name, otp }) => {
     return sendEmail({
         to,
-        subject: 'Reset Your GrievAI Password',
+        subject: 'Reset Your SmartGrieve Password',
         html: forgotPasswordOtpTemplate(name, otp)
     });
 };
@@ -138,7 +138,7 @@ const sendPasswordResetEmail = async ({ to, name, otp }) => {
 const sendVerificationEmail = async ({ to, name, verificationLink }) => {
     return sendEmail({
         to,
-        subject: 'Verify Your GrievAI Account',
+        subject: 'Verify Your SmartGrieve Account',
         html: verificationEmailTemplate(name, verificationLink)
     });
 };

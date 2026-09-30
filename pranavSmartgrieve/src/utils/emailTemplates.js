@@ -64,14 +64,14 @@ const verificationEmailTemplate = (name, verificationLink) => `
             </div>
             <div style="${bodyStyles}">
                 <h2 style="color: #0f172a;">Welcome, ${name}!</h2>
-                <p>Thank you for registering with GrievAI. To activate your account and start filing grievances, please verify your email address.</p>
+                <p>Thank you for registering with SmartGrieve. To activate your account and start filing grievances, please verify your email address.</p>
                 <div style="text-align: center;">
                     <a href="${verificationLink}" style="${buttonStyles}">Verify Your Email</a>
                 </div>
                 <p style="font-size: 14px; color: #64748b;">This link will expire in 24 hours. If you did not create an account, please ignore this email.</p>
             </div>
             <div style="${footerStyles}">
-                &copy; ${new Date().getFullYear()} GrievAI Bhopal. Empowering Citizens.
+                &copy; ${new Date().getFullYear()} SmartGrieve Bhopal. Empowering Citizens.
             </div>
         </div>
     </div>
@@ -118,7 +118,7 @@ const complaintConfirmationTemplate = (name, grievanceId, category, urgency, dep
                 <p style="margin-top: 20px;">You can track the live status of your complaint on your dashboard using the Grievance ID above.</p>
             </div>
             <div style="${footerStyles}">
-                &copy; ${new Date().getFullYear()} GrievAI Bhopal. Efficient Governance.
+                &copy; ${new Date().getFullYear()} SmartGrieve Bhopal. Efficient Governance.
             </div>
         </div>
     </div>
@@ -156,7 +156,7 @@ const statusUpdateTemplate = (name, grievanceId, oldStatus, newStatus, officerNa
                     <p>Thank you for your patience as we work to resolve this matter.</p>
                 </div>
                 <div style="${footerStyles}">
-                    &copy; ${new Date().getFullYear()} GrievAI Bhopal. Active Support.
+                    &copy; ${new Date().getFullYear()} SmartGrieve Bhopal. Active Support.
                 </div>
             </div>
         </div>
@@ -175,7 +175,7 @@ const otpEmailTemplate = (name, otp) => `
             <div style="${bodyStyles}">
                 <h2 style="color: #0f172a;">Verify Your Account</h2>
                 <p>Hello ${name},</p>
-                <p>Thank you for registering with GrievAI. Please use the following One-Time Password (OTP) to verify your email address. This code is valid for <b>10 minutes</b>.</p>
+                <p>Thank you for registering with SmartGrieve. Please use the following One-Time Password (OTP) to verify your email address. This code is valid for <b>10 minutes</b>.</p>
                 
                 <div style="text-align: center; margin: 40px 0;">
                     <div style="
@@ -200,7 +200,7 @@ const otpEmailTemplate = (name, otp) => `
                 </p>
             </div>
             <div style="${footerStyles}">
-                &copy; ${new Date().getFullYear()} GrievAI | Bhopal Municipal Corporation
+                &copy; ${new Date().getFullYear()} SmartGrieve | Bhopal Municipal Corporation
             </div>
         </div>
     </div>
@@ -216,7 +216,7 @@ const forgotPasswordOtpTemplate = (name, otp) => `
                 <div style="font-size: 24px;">${brandName}</div>
             </div>
             <div style="${bodyStyles}">
-                <h2 style="color: #0f172a;">Reset Your GrievAI Password</h2>
+                <h2 style="color: #0f172a;">Reset Your SmartGrieve Password</h2>
                 <p>Hello ${name},</p>
                 <p>We received a request to reset your password. Please use the following One-Time Password (OTP) to proceed. This code is valid for <b>10 minutes</b>.</p>
                 
@@ -243,7 +243,7 @@ const forgotPasswordOtpTemplate = (name, otp) => `
                 </p>
             </div>
             <div style="${footerStyles}">
-                &copy; ${new Date().getFullYear()} GrievAI | Bhopal Municipal Corporation
+                &copy; ${new Date().getFullYear()} SmartGrieve | Bhopal Municipal Corporation
             </div>
         </div>
     </div>
@@ -261,7 +261,7 @@ const passwordChangedTemplate = (name) => `
             <div style="${bodyStyles}">
                 <h2 style="color: #0f172a;">Password Changed Successfully</h2>
                 <p>Hello ${name},</p>
-                <p>This is a confirmation that the password for your GrievAI account has been changed on ${new Date().toLocaleString()}.</p>
+                <p>This is a confirmation that the password for your SmartGrieve account has been changed on ${new Date().toLocaleString()}.</p>
                 
                 <div style="background-color: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #22c55e; margin: 20px 0;">
                     <p style="margin: 0; color: #166534; font-weight: 600;">Your security is important to us.</p>
@@ -270,7 +270,7 @@ const passwordChangedTemplate = (name) => `
                 <p>If you did not perform this action, please contact our support team immediately at <a href="mailto:support@grievai.bhopal.gov.in" style="color: #f59e0b;">support@grievai.bhopal.gov.in</a>.</p>
             </div>
             <div style="${footerStyles}">
-                &copy; ${new Date().getFullYear()} GrievAI Bhopal. Safe & Secure.
+                &copy; ${new Date().getFullYear()} SmartGrieve Bhopal. Safe & Secure.
             </div>
         </div>
     </div>
