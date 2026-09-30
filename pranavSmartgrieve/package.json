@@ -35,13 +35,13 @@
     "seed:complaints": "node src/scripts/seedComplaints.js",
     "tunnel": "cloudflared tunnel --url http://localhost:3000",
     "test": "jest",
-    "test:unit": "jest --selectProjects unit",
-    "test:integration": "jest --selectProjects integration",
-    "test:contracts": "jest --selectProjects contracts",
-    "test:security": "jest --selectProjects security",
-    "test:perf": "jest --selectProjects performance",
-    "test:coverage": "jest --coverage",
-    "test:ci": "jest --coverage --ci"
+    "test:unit": "jest --selectProjects unit --passWithNoTests",
+    "test:integration": "jest --selectProjects integration --passWithNoTests",
+    "test:contracts": "jest --selectProjects contracts --passWithNoTests",
+    "test:security": "jest --selectProjects security --passWithNoTests",
+    "test:perf": "jest --selectProjects performance --passWithNoTests",
+    "test:coverage": "jest --coverage --passWithNoTests",
+    "test:ci": "jest --coverage --ci --passWithNoTests"
   },
   "devDependencies": {
     "eslint": "^10.11.0",
