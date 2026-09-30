@@ -11,7 +11,7 @@ const Complaint = require("../models/complaint.model");
 const { DEPARTMENTS, CATEGORY_TO_DEPT } = require("../constants/departments");
 
 // Paths
-const GEOJSON_PATH = path.join(__dirname, "../../../React Map Feature/GoogleMaps/public/mygeodata/mygeodata.geojson");
+const GEOJSON_PATH = path.join(__dirname, "../../../pranavFrontend/public/mygeodata/mygeodata.geojson");
 
 // Templates for realistic complaints
 const COMPLAINT_TEMPLATES = {
@@ -262,6 +262,9 @@ const seed = async () => {
                 stats.byStatus[status] = (stats.byStatus[status] || 0) + 1;
             }
         }
+
+        // Sort complaints by createdAt so the auto-increment hook works correctly
+        complaintsToInsert.sort((a, b) => a.createdAt - b.createdAt);
 
         // Insert in chunks for better performance and reliability
         const chunkSize = 100;
