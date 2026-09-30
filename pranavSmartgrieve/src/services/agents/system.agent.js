@@ -137,12 +137,14 @@ async function run(aiResult, doc, guardResult, previousStatus) {
         }
     }
 
-    if (geoResult.resolution_method === 'unresolved' && hasTextLocation) {
+    const hasAILocation = Boolean(aiResult.location_text && aiResult.location_text.trim().length > 2 && aiResult.location_text.toLowerCase() !== 'unknown');
+
+    if (geoResult.resolution_method === 'unresolved' && (hasTextLocation || hasAILocation)) {
         // Text-based location was extracted but could not be resolved against Bhopal constitution.
-        // Keep unresolved: it must NOT be accepted as Green.
+        // Or AI extracted it from a voice transcription.
         geoResult.landmark = aiResult.location_text.trim();
         console.log(`📍 [SYSTEM] Unresolved text location: "${geoResult.landmark}" (no coordinate or landmark match)`);
-    } else if ((geoResult.resolution_method === 'hub_centroid' || geoResult.resolution_method === 'ward_alias') && hasTextLocation) {
+    } else if ((geoResult.resolution_method === 'hub_centroid' || geoResult.resolution_method === 'ward_alias') && (hasTextLocation || hasAILocation)) {
         // If it resolved to a ward, but the user provided a more specific text (like a colony name), use it for display
         if (aiResult.location_text.trim().length > geoResult.landmark.length) {
             geoResult.landmark = aiResult.location_text.trim();
@@ -428,10 +430,10 @@ async function run(aiResult, doc, guardResult, previousStatus) {
             const assignedOfficerId = await AssignmentService.getBestOfficer(finalComplaint);
             if (assignedOfficerId) {
                 finalComplaint.assignedTo = assignedOfficerId;
-                // Update Officer Stats
-                await User.findByIdAndUpdate(assignedOfficerId, {
+                // Update Officer Stats and store officer details
+                finalOfficer = await User.findByIdAndUpdate(assignedOfficerId, {
                     $inc: { "performanceStats.totalAssigned": 1 }
-                });
+                }, { new: true });
             }
 
             await finalComplaint.save();
