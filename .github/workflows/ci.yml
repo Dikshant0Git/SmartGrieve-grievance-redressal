@@ -21,26 +21,26 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: SmartGrieve/pranavSmartgrieve/package-lock.json
+          cache-dependency-path: pranavSmartgrieve/package-lock.json
 
       - name: Install dependencies
-        working-directory: SmartGrieve/pranavSmartgrieve
+        working-directory: pranavSmartgrieve
         run: npm ci
 
       - name: Lint
-        working-directory: SmartGrieve/pranavSmartgrieve
+        working-directory: pranavSmartgrieve
         run: npx eslint src/ --max-warnings 0 || true
 
       - name: Unit tests
-        working-directory: SmartGrieve/pranavSmartgrieve
+        working-directory: pranavSmartgrieve
         run: npm run test:unit
 
       - name: Integration tests
-        working-directory: SmartGrieve/pranavSmartgrieve
+        working-directory: pranavSmartgrieve
         run: npm run test:integration
 
       - name: Full test suite with coverage
-        working-directory: SmartGrieve/pranavSmartgrieve
+        working-directory: pranavSmartgrieve
         run: npm run test:ci
 
       - name: Upload coverage to artifacts
@@ -48,5 +48,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: SmartGrieve/pranavSmartgrieve/coverage/
+          path: pranavSmartgrieve/coverage/
           retention-days: 7
