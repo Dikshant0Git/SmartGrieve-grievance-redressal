@@ -211,10 +211,12 @@ async function run(aiResult, doc, guardResult, previousStatus) {
                        geoResult.resolution_method === 'ward_alias' || 
                        geoResult.resolution_method === 'zone_name');
     
-    const isUnresolved = geoResult.resolution_method === 'unresolved' || 
-                         geoResult.resolution_method === 'none' ||
-                         geoResult.resolution_method === 'ai_text' ||
-                         !geoResult.landmark;
+    const isUnresolved = isExistingComplaint 
+        ? (!hasTextLocation && !geoResult.landmark) 
+        : (geoResult.resolution_method === 'unresolved' || 
+           geoResult.resolution_method === 'none' ||
+           geoResult.resolution_method === 'ai_text' ||
+           !geoResult.landmark);
 
     if (finalCategory === 'Rejected') {
         statusTier = 'Red';
