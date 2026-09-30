@@ -2,7 +2,7 @@ const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
-const { sendEmail } = require("../config/nodemailer");
+const { sendEmail } = require("../services/mail.service");
 const { otpEmailTemplate } = require("../utils/emailTemplates");
 const { generateOtp, hashOtp } = require("../utils/generateOtp");
 

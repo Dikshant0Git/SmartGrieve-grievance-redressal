@@ -138,25 +138,18 @@ async function run(aiResult, doc, guardResult, previousStatus) {
     }
 
     if (geoResult.resolution_method === 'unresolved' && hasTextLocation) {
-        // We have text-based location but no coordinate match.
-        // Store the text as the landmark and mark as 'ai_text' resolution.
+        // Text-based location was extracted but could not be resolved against Bhopal constitution.
+        // Keep unresolved: it must NOT be accepted as Green.
         geoResult.landmark = aiResult.location_text.trim();
-        geoResult.resolution_method = 'ai_text';
-        geoResult.confidence = 60; // Lower than exact match but still valid
-        console.log(`📍 [SYSTEM] Text-based location accepted: "${geoResult.landmark}" (no coordinate match, but valid location info)`);
+        console.log(`📍 [SYSTEM] Unresolved text location: "${geoResult.landmark}" (no coordinate or landmark match)`);
+    } else if ((geoResult.resolution_method === 'hub_centroid' || geoResult.resolution_method === 'ward_alias') && hasTextLocation) {
+        // If it resolved to a ward, but the user provided a more specific text (like a colony name), use it for display
+        if (aiResult.location_text.trim().length > geoResult.landmark.length) {
+            geoResult.landmark = aiResult.location_text.trim();
+        }
     }
 
     let invalidLocation = false;
-    // Fallback: If resolver didn't find a zone, but AI extracted zoneId, use it!
-    if (!geoResult.zone && aiResult.zoneId) {
-        if (aiResult.zoneId >= 1 && aiResult.zoneId <= 14) {
-            geoResult.zone = aiResult.zoneId;
-            console.log(`📍 [SYSTEM] Fallback: Using zoneId from AI extraction: ${geoResult.zone}`);
-        } else {
-            console.warn(`⚠️ [SYSTEM] AI extracted invalid zoneId: ${aiResult.zoneId}.`);
-            invalidLocation = true;
-        }
-    }
 
     // Merge confidence — clamp to 0-100 range
     let finalConfidence = aiResult.confidence_score || 50;
@@ -207,17 +200,29 @@ async function run(aiResult, doc, guardResult, previousStatus) {
     aiResult.departmentId = CATEGORY_TO_DEPT[finalCategory] || 'GENL';
 
     // ─── Step 2: Determine Status Tier ─────────────────────────────
-    // GREEN: valid complaint with any location info (coordinates OR text)
-    // YELLOW: valid complaint but ZERO location info (no text, no EXIF)
+    // GREEN: valid complaint with exact or landmark location
+    // YELLOW: unresolved location or area-only (needs citizen to provide landmark/street/pin)
     // RED: rejected by AI (out of scope)
     let statusTier;
+    const isExistingComplaint = doc.constructor.modelName === 'Complaint'; // True for Web flow, False for WhatsApp flow
+
+    const isAreaOnly = !isExistingComplaint && (
+                       geoResult.resolution_method === 'hub_centroid' || 
+                       geoResult.resolution_method === 'ward_alias' || 
+                       geoResult.resolution_method === 'zone_name');
+    
+    const isUnresolved = geoResult.resolution_method === 'unresolved' || 
+                         geoResult.resolution_method === 'none' ||
+                         geoResult.resolution_method === 'ai_text' ||
+                         !geoResult.landmark;
+
     if (finalCategory === 'Rejected') {
         statusTier = 'Red';
-    } else if ((geoResult.resolution_method === 'unresolved' && !hasTextLocation && !guardResult.isEmergency) || invalidLocation) {
-        // Truly no location at all or invalid location — ask the user
+    } else if ((isUnresolved || isAreaOnly) && !guardResult?.isEmergency) {
+        // Unresolved or area-only -> Yellow (ask)
         statusTier = 'Yellow';
     } else {
-        // Has location (coordinates, text-based, EXIF, or emergency) → Green
+        // Exact/landmark location or emergency -> Green
         statusTier = 'Green';
     }
 
@@ -290,55 +295,16 @@ async function run(aiResult, doc, guardResult, previousStatus) {
             console.error(`❌ [SYSTEM] Failed to save Grievance ${ticketId}:`, saveErr.message);
         }
 
-        // Also save a preliminary Complaint so it appears in the dashboard
-        try {
-            const mediaForDb = (doc.media || []).filter(m => m.image_url).map(m => ({
-                image_url: m.image_url,
-                public_id: m.public_id
-            }));
-
-            const isExistingComplaint = doc.constructor.modelName === 'Complaint';
-
-            const complaintData = {
-                source: doc.source || (isExistingComplaint ? doc.source : 'WhatsApp'),
-                userId: doc.userId || (isExistingComplaint ? doc.userId : null),
-                status: 'review_required',
-                text: doc.finalTextForAI || 'Awaiting location details',
-                location: {
-                    district: "Bhopal",
-                    ward: (doc.location?.ward) || (geoResult.ward ? geoResult.ward.toString() : null),
-                    coordinates: geoResult.coordinates?.length ? geoResult.coordinates : (doc.location?.coordinates || null),
-                    address: geoResult.landmark || doc.finalTextForAI || doc.location?.address || "Bhopal"
-                },
-                ai: {
-                    category: [finalCategory],
-                    urgency: aiResult.priority || 'Medium',
-                    confidence: finalConfidence / 100,
-                    summary: aiResult.summary
-                },
-                assignedDept: aiResult.departmentId,
-                media: mediaForDb,
-                ticketId: ticketId || doc.ticketId
-            };
-
-            if (isExistingComplaint) {
-                doc.set(complaintData);
-                await doc.save();
-            } else {
-                const preliminaryDoc = new Complaint(complaintData);
-                await preliminaryDoc.save();
-            }
-            console.log(`💾 [SYSTEM] Preliminary Complaint saved. Ward: ${doc.location?.ward || geoResult.ward}`);
-        } catch (procErr) {
-            console.error(`❌ [SYSTEM] Failed to save Preliminary Complaint:`, procErr.message);
-        }
+        // Preliminary Complaint creation removed to prevent T-003 Duplicate Complaint bug.
+        // The Grievance remains in Awaiting_Input state and will be converted to a single Complaint
+        // upon receiving the location and reaching the Green state.
 
         // Send detailed WhatsApp message asking for specifics
         const notification = `⚠️ *Location Required*\nTicket ID: \`${ticketId}\`\n\n${responseMessage}\n\n📍 *Kripya yeh details bhejein:*\n• Paas ka koi landmark (DB Mall, Kamla Park, etc.)\n• Colony/Area ka naam\n• Ya Google Maps location share karein\n\n_Aapki complaint safe hai aur location milte hi process ho jayegi._`;
         await sendWhatsAppMessage(doc.userId, notification);
 
         console.log(`\n⏸️  [AWAITING INPUT] Ticket ${ticketId} paused, waiting for user location...`);
-        return { statusTier: 'Yellow', paused: true };
+        return { statusTier: 'Yellow', paused: true, responseMessage };
     }
 
     // ─── Step 4: Duplicate Detection ───────────────────────────────
@@ -365,19 +331,25 @@ async function run(aiResult, doc, guardResult, previousStatus) {
         priority: aiResult.priority,
         summary: aiResult.summary
     };
-    doc.status = statusTier === 'Red' ? 'Rejected' : 'Resolved';
-    try {
-        if (statusTier === 'Red') {
-            // Delete the staging grievance if rejected
-            await Grievance.findByIdAndDelete(doc._id);
-            console.log(`🗑️ [SYSTEM] Grievance ${ticketId} DELETED (Rejected by AI)`);
-        } else {
-            await doc.save();
-            console.log(`💾 [SYSTEM] Grievance ${ticketId} saved with status ${doc.status}.`);
+    if (!isExistingComplaint) {
+        doc.status = statusTier === 'Red' ? 'Rejected' : 'Resolved';
+        try {
+            if (statusTier === 'Red') {
+                // Delete the staging grievance if rejected
+                await Grievance.findByIdAndDelete(doc._id);
+                console.log(`🗑️ [SYSTEM] Grievance ${ticketId} DELETED (Rejected by AI)`);
+            } else {
+                await doc.save();
+                console.log(`💾 [SYSTEM] Grievance ${ticketId} saved with status ${doc.status}.`);
+            }
+        } catch (saveErr) {
+            console.error(`❌ [SYSTEM] Failed to save/delete Grievance ${ticketId}:`, saveErr.message);
         }
-    } catch (saveErr) {
-        console.error(`❌ [SYSTEM] Failed to save/delete Grievance ${ticketId}:`, saveErr.message);
-        // Don't return — still try to proceed with the pipeline
+    } else {
+        if (statusTier === 'Red') {
+             // Web flow rejection happens in complaint.controller, but just in case:
+             doc.status = 'Rejected';
+        }
     }
 
     // ─── Step 6: Save to ProcessedGrievance ────────────────────────
@@ -405,7 +377,7 @@ async function run(aiResult, doc, guardResult, previousStatus) {
                 requiresManualReview = true;
             }
 
-            const isExistingComplaint = doc.constructor.modelName === 'Complaint';
+            // isExistingComplaint is now defined above
 
             const complaintData = {
                 source: doc.source || (isExistingComplaint ? doc.source : 'WhatsApp'),
@@ -420,7 +392,7 @@ async function run(aiResult, doc, guardResult, previousStatus) {
                 },
                 ai: {
                     category: [finalCategory],
-                    urgency: aiResult.priority || 'Medium',
+                    urgency: aiResult.severity || 'Medium',
                     confidence: finalConfidence / 100,
                     summary: aiResult.summary
                 },
@@ -553,12 +525,14 @@ async function run(aiResult, doc, guardResult, previousStatus) {
     console.log(`╚════════════════════════════════════════════════════════════════════╝\n`);
 
     // ─── Step 9: Finalize Staging Document ──────────────────────────
-    try {
-        doc.status = 'Resolved';
-        await doc.save();
-        console.log(`🏁 [SYSTEM] Staging Grievance ${ticketId} marked as Resolved.`);
-    } catch (finalErr) {
-        console.error(`⚠️ [SYSTEM] Failed to resolve staging document:`, finalErr.message);
+    if (!isExistingComplaint) {
+        try {
+            doc.status = 'Resolved';
+            await doc.save();
+            console.log(`🏁 [SYSTEM] Staging Grievance ${ticketId} marked as Resolved.`);
+        } catch (finalErr) {
+            console.error(`⚠️ [SYSTEM] Failed to resolve staging document:`, finalErr.message);
+        }
     }
 
     return { statusTier, paused: false };

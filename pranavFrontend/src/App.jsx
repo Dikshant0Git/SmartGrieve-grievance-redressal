@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext';
 import AuthPage from './LoginRegister';
 import ProtectedRoute from './ProtectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import OfficerLogin from './OfficerLogin';
-import AdminDashboard from './AdminDashboard';
-import CitizenDashboard from './CitizenDashboard';
-import OfficerDashboard from './OfficerDashboard';
-import VerifyOtp from './VerifyOtp';
-import ForgotPassword from './ForgotPassword';
+const OfficerLogin = lazy(() => import('./OfficerLogin'));
+const AdminDashboard = lazy(() => import('./AdminDashboard'));
+const CitizenDashboard = lazy(() => import('./CitizenDashboard'));
+const OfficerDashboard = lazy(() => import('./OfficerDashboard'));
+const VerifyOtp = lazy(() => import('./VerifyOtp'));
+const ForgotPassword = lazy(() => import('./ForgotPassword'));
+
+const PageLoader = () => (
+    <div className="flex items-center justify-center min-h-screen bg-slate-50">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+    </div>
+);
 
 const AppRoutes = () => {
     const { user, loading } = useAuth();
 
-    if (loading) return null; // Or a full screen loader
+    if (loading) return <PageLoader />;
 
     // Fallback logic for catch-all
     const getFallbackRoute = () => {
@@ -25,51 +33,50 @@ const AppRoutes = () => {
     };
 
     return (
-        <Routes>
-            {/* Redirect root based on role */}
-            <Route path="/" element={<Navigate to={getFallbackRoute()} replace />} />
+        <Suspense fallback={<PageLoader />}>
+            <Routes>
+                {/* Redirect root based on role */}
+                <Route path="/" element={<Navigate to={getFallbackRoute()} replace />} />
 
-            {/* Public/Auth Routes */}
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/register" element={<AuthPage />} />
-            <Route path="/verify-otp" element={<VerifyOtp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/officer-login" element={<OfficerLogin />} />
+                {/* Public/Auth Routes */}
+                <Route path="/login" element={<AuthPage />} />
+                <Route path="/register" element={<AuthPage />} />
+                <Route path="/verify-otp" element={<VerifyOtp />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/officer-login" element={<OfficerLogin />} />
 
-            {/* Protected Routes */}
-            <Route 
-                path="/citizen" 
-                element={
-                    <ProtectedRoute allowedRoles={['citizen']} fallbackPath="/login">
-                        <CitizenDashboard />
-                    </ProtectedRoute>
-                } 
-            />
-            <Route 
-                path="/dashboard" 
-                element={
-                    <ProtectedRoute allowedRoles={['officer']} fallbackPath="/officer-login">
-                        <OfficerDashboard />
-                    </ProtectedRoute>
-                } 
-            />
-            <Route 
-                path="/admin" 
-                element={
-                    <ProtectedRoute allowedRoles={['senior_officer', 'admin']} fallbackPath="/officer-login">
-                        <AdminDashboard />
-                    </ProtectedRoute>
-                } 
-            />
+                {/* Protected Routes */}
+                <Route 
+                    path="/citizen" 
+                    element={
+                        <ProtectedRoute allowedRoles={['citizen']} fallbackPath="/login">
+                            <CitizenDashboard />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/dashboard" 
+                    element={
+                        <ProtectedRoute allowedRoles={['officer']} fallbackPath="/officer-login">
+                            <OfficerDashboard />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/admin" 
+                    element={
+                        <ProtectedRoute allowedRoles={['senior_officer', 'admin']} fallbackPath="/officer-login">
+                            <AdminDashboard />
+                        </ProtectedRoute>
+                    } 
+                />
 
-            {/* Catch-all */}
-            <Route path="*" element={<Navigate to={getFallbackRoute()} replace />} />
-        </Routes>
+                {/* Catch-all */}
+                <Route path="*" element={<Navigate to={getFallbackRoute()} replace />} />
+            </Routes>
+        </Suspense>
     );
 };
-
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
     return (

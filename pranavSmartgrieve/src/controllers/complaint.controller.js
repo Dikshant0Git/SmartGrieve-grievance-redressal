@@ -4,7 +4,7 @@ const { uploadToCloudinary } = require("../services/media.service");
 const guardrailAgent = require("../services/agents/guardrail.agent");
 const intelligenceAgent = require("../services/agents/intelligence.agent");
 const systemAgent = require("../services/agents/system.agent");
-const { sendEmail } = require("../config/nodemailer");
+const { sendEmail } = require("../services/mail.service");
 const { complaintConfirmationTemplate, statusUpdateTemplate } = require("../utils/emailTemplates");
 const { DEPARTMENTS } = require("../constants/departments");
 const { transcribeAudio } = require("../services/speechToText.service");
@@ -93,6 +93,15 @@ const ComplaintController = async (req, res) => {
 
         // System (Geo-resolve + Dedup + Finalize)
         const finalResult = await systemAgent.run(aiResult, complaint, guardResult, 'processing');
+
+        if (finalResult.statusTier === 'Yellow') {
+            return res.status(400).json({
+                success: false,
+                needsLocation: true,
+                message: finalResult.responseMessage || "Bhiya, aapki complaint samajh aa gayi hai lekin aage badhne ke liye hume exact location chahiye. Bina location ke hum issue resolve nahi kar payenge.",
+                complaintId: complaint._id
+            });
+        }
 
         // 4. Results are already saved to the DB by systemAgent.run()
         // We just need to return the updated document.
@@ -203,6 +212,29 @@ const submitVoiceComplaint = async (req, res) => {
         // System (Geo-resolve + Dedup + Finalize)
         const finalResult = await systemAgent.run(aiResult, complaint, guardResult, 'processing');
         
+        if (finalResult.statusTier === 'Yellow') {
+            let audioResponse = null;
+            try {
+                const audioText = finalResult.responseMessage || "Bhiya, aapki complaint samajh aa gayi hai lekin aage badhne ke liye hume exact location chahiye. Bina location ke hum issue resolve nahi kar payenge.";
+                const langCode = mapLanguageToGoogleCode(aiResult.detectedLanguage || 'mixed');
+                const audioBuffer = await generateSpeech(audioText, langCode);
+                if (audioBuffer && audioBuffer.length > 8) {
+                    audioResponse = audioBuffer.toString('base64');
+                }
+            } catch (audioErr) {
+                console.error('⚠️ [Voice] Failed to generate audio response for frontend:', audioErr.message);
+            }
+
+            return res.status(400).json({
+                success: false,
+                needsLocation: true,
+                message: finalResult.responseMessage || "Bhiya, aapki complaint samajh aa gayi hai lekin aage badhne ke liye hume exact location chahiye. Bina location ke hum issue resolve nahi kar payenge.",
+                transcribedText: transcribedText,
+                complaintId: complaint._id,
+                audioResponse: audioResponse
+            });
+        }
+
         // 4. Return the fully processed document
         const finalComplaint = await complaintModel.findById(complaint._id).populate('citizen', 'name mobileNo email');
 

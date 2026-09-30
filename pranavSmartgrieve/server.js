@@ -3,9 +3,6 @@ const app = require("./src/config/app");
 const connectDB = require("./src/database/db");
 const { initCron } = require("./src/services/cron.service");
 
-connectDB();
-initCron();
-
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -40,9 +37,22 @@ io.on("connection", (socket) => {
     });
 });
 
-server.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`);
-});
+const startServer = async () => {
+    try {
+        await connectDB();
+        initCron();
+
+        const PORT = process.env.PORT || 3000;
+        server.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (err) {
+        console.error("Failed to start server:", err);
+        process.exit(1);
+    }
+};
+
+startServer();
 
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Unhandled Rejection at:', promise, 'reason:', reason);

@@ -224,7 +224,26 @@ async function processWhatsAppImage(mediaId, ticketId) {
 ... (existing content)
  */
 async function processWhatsAppAudio(mediaId) {
-    // ... (rest of function)
+    const safeResult = {
+        buffer: null,
+        mimeType: 'audio/ogg'
+    };
+
+    try {
+        const mediaUrl = await module.exports.fetchMetaMediaUrl(mediaId);
+        if (!mediaUrl) return safeResult;
+
+        const buffer = await module.exports.downloadMedia(mediaUrl);
+        if (!buffer) return safeResult;
+
+        return {
+            buffer,
+            mimeType: 'audio/ogg'
+        };
+    } catch (err) {
+        console.error('🎤 [MEDIA] processWhatsAppAudio failed:', err.message);
+        return safeResult;
+    }
 }
 
 /**

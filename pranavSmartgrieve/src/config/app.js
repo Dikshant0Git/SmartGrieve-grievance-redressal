@@ -35,4 +35,19 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/complaints", complaintRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
 
+if (process.env.NODE_ENV === 'test') {
+    app.get('/test-error', async (req, res) => {
+        throw new Error('Simulated Crash');
+    });
+}
+
+// Global Error Middleware
+app.use((err, req, res, next) => {
+    console.error(`❌ [SERVER] Unhandled Error:`, err.message);
+    res.status(err.status || 500).json({
+        error: "Internal Server Error",
+        message: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? err.message : 'Something went wrong'
+    });
+});
+
 module.exports = app

@@ -1587,7 +1587,15 @@ const CitizenDashboard = () => {
                             </div>
 
                             <div className="cd-complaint-meta">
-                              {item.assignedDept || "Pending Analysis"} •{" "}
+                              {
+                                item.assignedDept === 'MUNC' ? 'Municipal Corp' :
+                                item.assignedDept === 'ELEC' ? 'Electricity Board' :
+                                item.assignedDept === 'HLTH' ? 'Health Dept' :
+                                item.assignedDept === 'TRNS' ? 'Transport Dept' :
+                                item.assignedDept === 'REVN' ? 'Revenue Dept' :
+                                item.assignedDept === 'GENL' ? 'General Admin' :
+                                item.assignedDept || "Pending Analysis"
+                              } •{" "}
                               {item.ai?.category?.[0] || "Uncategorized"} •{" "}
                               {item.ai?.urgency || "Medium"}
                             </div>
@@ -1603,7 +1611,7 @@ const CitizenDashboard = () => {
                         </div>
 
                         <div className="cd-complaint-meta">
-                          <b>Area:</b> {item.location?.landmark || "—"} • <b>Ward:</b>{" "}
+                          <b>Area:</b> {item.location?.address || "—"} • <b>Ward:</b>{" "}
                           {item.location?.ward || "—"} • <b>City:</b>{" "}
                           {item.location?.district || "—"}
                         </div>

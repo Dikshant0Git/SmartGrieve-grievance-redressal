@@ -19,7 +19,7 @@ const { QueueEvents } = require('bullmq');
 const guardrailAgent = require('./agents/guardrail.agent');
 const intelligenceAgent = require('./agents/intelligence.agent');
 const systemAgent = require('./agents/system.agent');
-const { processWhatsAppImage, processWhatsAppAudio, MAX_IMAGES_PER_COMPLAINT } = require('./media.service');
+const mediaService = require('./media.service');
 
 const connection = require('../config/redis.config');
 
@@ -38,6 +38,7 @@ const worker = new Worker('ai-processing', async (job) => {
     const { id } = job.data;
     console.log(`🤖 [AI Worker] Job ${job.id} picked up for grievance ${id}`);
 
+    let userId = null;
     try {
         const doc = await Grievance.findById(id);
         if (!doc) {
@@ -45,6 +46,7 @@ const worker = new Worker('ai-processing', async (job) => {
             return;
         }
 
+        userId = doc.userId;
         const previousStatus = doc.status; // Save previous status
         doc.status = 'Processing';
         await doc.save();
@@ -115,6 +117,16 @@ const worker = new Worker('ai-processing', async (job) => {
         } catch (e) { /* best-effort */ }
 
         throw err;
+    } finally {
+        // ALWAYS clean up buffers
+        if (userId) {
+            if (global._mediaBuffers?.has(userId)) {
+                global._mediaBuffers.delete(userId);
+            }
+            if (global._audioBuffers?.has(userId)) {
+                global._audioBuffers.delete(userId);
+            }
+        }
     }
 }, {
     connection,
@@ -204,14 +216,14 @@ const intakeWorker = new Worker('intake', async (job) => {
                 status: { $in: ['Collecting', 'Awaiting_Input'] }
             });
 
-            if (existingDoc && existingDoc.media && existingDoc.media.length >= MAX_IMAGES_PER_COMPLAINT) {
-                console.log(`📷 [MEDIA] Max ${MAX_IMAGES_PER_COMPLAINT} images reached for ${phoneNumber}. Ignoring additional image.`);
+            if (existingDoc && existingDoc.media && existingDoc.media.length >= mediaService.MAX_IMAGES_PER_COMPLAINT) {
+                console.log(`📷 [MEDIA] Max ${mediaService.MAX_IMAGES_PER_COMPLAINT} images reached for ${phoneNumber}. Ignoring additional image.`);
                 return;
             }
 
             const ticketId = (existingDoc?._id || messageId).toString().substring(0, 8).toUpperCase();
             console.log(`📷 [MEDIA] Processing image for ticket ${ticketId}...`);
-            const mediaResult = await processWhatsAppImage(mediaId, ticketId);
+            const mediaResult = await mediaService.processWhatsAppImage(mediaId, ticketId);
 
             const mediaEntry = {
                 image_url: mediaResult.image_url,
@@ -252,7 +264,7 @@ const intakeWorker = new Worker('intake', async (job) => {
 
             const ticketId = (existingDoc?._id || messageId).toString().substring(0, 8).toUpperCase();
             console.log(`🎬 [MEDIA] Processing video for ticket ${ticketId}...`);
-            const mediaResult = await processWhatsAppVideo(mediaId, ticketId);
+            const mediaResult = await mediaService.processWhatsAppVideo(mediaId, ticketId);
 
             const mediaEntry = {
                 type: 'video',
@@ -280,7 +292,7 @@ const intakeWorker = new Worker('intake', async (job) => {
             console.log(`🎤 Audio/Voice from ${phoneNumber} (media_id: ${mediaId}, voice_note: ${isVoiceNote})`);
 
             console.log(`🎤 [MEDIA] Downloading audio for processing...`);
-            const audioResult = await processWhatsAppAudio(mediaId);
+            const audioResult = await mediaService.processWhatsAppAudio(mediaId);
 
             if (audioResult.buffer) {
                 if (!global._audioBuffers) global._audioBuffers = new Map();

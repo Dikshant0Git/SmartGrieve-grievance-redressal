@@ -1,4 +1,5 @@
 const cron = require('node-cron');
+const mongoose = require('mongoose');
 const Complaint = require('../models/complaint.model');
 const User = require('../models/user.model');
 
@@ -18,15 +19,21 @@ const initCron = () => {
         await monitorSLA();
     });
 
-    // Run once on startup after 10 seconds to catch up
+    // Run initial scan 5 seconds after startup once DB is ready
     setTimeout(() => {
         console.log('⏰ [CRON] Initial SLA scan running...');
         monitorSLA();
-    }, 10000);
+    }, 5000);
 };
 
 const monitorSLA = async () => {
     try {
+        // Prevent buffering timeouts if MongoDB is not connected
+        if (mongoose.connection.readyState !== 1) {
+            console.warn(`⏳ [CRON] MongoDB not connected yet (readyState: ${mongoose.connection.readyState}). Skipping SLA scan.`);
+            return;
+        }
+
         const now = new Date();
 
         // Find complaints that are:
@@ -47,24 +54,26 @@ const monitorSLA = async () => {
         console.log(`🚨 [CRON] Detected ${breachedComplaints.length} new SLA breaches!`);
 
         for (const complaint of breachedComplaints) {
-            complaint.sla.breached = true;
-            complaint.sla.escalatedAt = now;
-            complaint.status = 'escalated';
-            
-            // Log status change
-            complaint.statusHistory.push({
-                status: 'escalated',
-                changedAt: now,
-                changedBy: null, // System
-                note: 'Automated escalation due to SLA breach'
-            });
-
-            await complaint.save();
-            console.log(`🚩 [CRON] Escalated complaint ${complaint.grievanceId} (${complaint._id})`);
-
-            // TODO: In production, notify Senior Officer of the department here.
-            // For now, as per user request, we skip notifications.
-            // console.log(`📢 [CRON] Notification suppressed for Senior Officer of ${complaint.assignedDept}`);
+            try {
+                await Complaint.findByIdAndUpdate(complaint._id, {
+                    $set: {
+                        "sla.breached": true,
+                        "sla.escalatedAt": now,
+                        status: 'escalated'
+                    },
+                    $push: {
+                        statusHistory: {
+                            status: 'escalated',
+                            changedAt: now,
+                            changedBy: null, // System
+                            note: 'Automated escalation due to SLA breach'
+                        }
+                    }
+                });
+                console.log(`🚩 [CRON] Escalated complaint ${complaint.grievanceId || complaint._id}`);
+            } catch (singleErr) {
+                console.error(`⚠️ [CRON] Failed to escalate complaint ${complaint._id}:`, singleErr.message);
+            }
         }
 
     } catch (err) {

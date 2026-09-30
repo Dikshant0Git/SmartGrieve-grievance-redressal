@@ -7,11 +7,15 @@ const ALL_CATEGORIES = Object.values(DEPARTMENTS).flatMap(d => d.categories);
 const URGENCY_LEVELS = ["Low", "Medium", "High", "Critical"];
 const VALID_STATUSES = [
     "open",
+    "assigned",
     "processing",
     "under_review",
     "review_required",
+    "in_progress",
+    "pending",
     "escalated",
     "resolved",
+    "Resolved",
     "rejected"
 ];
 
@@ -190,8 +194,7 @@ const complaintSchema = new mongoose.Schema({
     statusHistory: [
         {
             status: {
-                type: String,
-                enum: VALID_STATUSES
+                type: String
             },
             changedAt: {
                 type: Date,

@@ -429,13 +429,14 @@ function applyPostProcessingRules(parsed, enrichedData, leafletPayload) {
   result.confidence_score = Math.round(result.confidence * 100);
   result.response_message = result.suggestedReply;
 
-  // Map new priority P1..P4 to existing High/Medium/Low
-  if (result.severity === 'Critical') result.priority_label = 'Critical';
-  else if (result.severity === 'High') result.priority_label = 'High';
-  else if (result.severity === 'Medium') result.priority_label = 'Medium';
-  else result.priority_label = 'Low';
-  
-  result.priority = result.priority_label;
+  // Enforce P1-P4 priority mapping based on severity
+  if (result.severity === 'Critical') {
+      result.priority = 'P1';
+  } else if (result.severity === 'High' && (result.priority === 'P3' || result.priority === 'P4')) {
+      result.priority = 'P2';
+  } else if (result.severity === 'Medium' && result.priority === 'P4') {
+      result.priority = 'P3';
+  }
 
   return result;
 }
@@ -622,4 +623,137 @@ async function run(normalized, getGeminiResponse, doc) {
     return aiResult;
 }
 
-module.exports = { run };
+/**
+ * LangChain-based classification path.
+ * Called when AI_HARNESS=langchain is set in environment.
+ * Keeps the same signature and return shape as the Gemini path.
+ *
+ * Media transcription/vision still uses Gemini (via dynamic import).
+ * Text classification uses Groq via LangChain.
+ */
+async function runLangchain(normalized, getGeminiResponse, doc) {
+    const { runClassifyChain } = require('../../ai/chains/classify.chain');
+    const { buildGeminiContext } = require('../../controllers/citycontext.controller');
+
+    // ── Step 1: Build city intelligence context ──
+    const { enrichedData, promptContext, leafletPayload } = buildGeminiContext(
+        normalized.text,
+        normalized.hasImage || normalized.hasAudio
+    );
+
+    let enrichedText = normalized.text;
+
+    // ── AUDIO STEP: Still uses Gemini for transcription ──
+    if (normalized.hasAudio) {
+        try {
+            const buffers = global._audioBuffers?.get(normalized.userId);
+            if (buffers && buffers.length > 0) {
+                const { getGeminiAudioTranscription } = await import('../gemini.service.mjs');
+                const { buffer, mimeType } = buffers[0];
+
+                console.log(`🧠 [LANGCHAIN] Calling Gemini Audio to transcribe voice note...`);
+                const transcription = await getGeminiAudioTranscription(
+                    "You are a transcription assistant for civic complaints in Bhopal.",
+                    buffer,
+                    mimeType
+                );
+
+                const cleanTranscription = transcription.trim();
+                if (cleanTranscription) {
+                    enrichedText = enrichedText
+                        ? `${enrichedText}\n[Voice note transcription: "${cleanTranscription}"]`
+                        : `[Voice note transcription: "${cleanTranscription}"]`;
+                    doc.audioTranscription = cleanTranscription;
+                }
+                global._audioBuffers.delete(normalized.userId);
+            }
+        } catch (err) {
+            console.error('🧠 [LANGCHAIN] Audio transcription step failed:', err.message);
+        }
+    }
+
+    // ── VISION/VIDEO STEP: Still uses Gemini ──
+    if ((normalized.hasImage || normalized.hasVideo) && doc?.media?.length > 0) {
+        try {
+            const buffers = global._mediaBuffers?.get(normalized.userId);
+            if (buffers && buffers.length > 0) {
+                const { getGeminiVisionResponse, getGeminiVideoResponse } = await import('../gemini.service.mjs');
+                const { buffer, mimeType } = buffers[0];
+
+                let description = '';
+                if (mimeType.startsWith('video') || normalized.hasVideo) {
+                    description = await getGeminiVideoResponse(
+                        VIDEO_DESCRIBE_PROMPT,
+                        'Analyze this video for a civic complaint system.',
+                        buffer,
+                        mimeType
+                    );
+                } else {
+                    description = await getGeminiVisionResponse(
+                        VISION_DESCRIBE_PROMPT,
+                        'Describe this image for a civic complaint system.',
+                        buffer,
+                        mimeType
+                    );
+                }
+
+                const cleanDescription = description.replace(/^["']|["']$/g, '').trim();
+                if (cleanDescription && cleanDescription !== 'No civic issue visible.') {
+                    enrichedText = enrichedText
+                        ? `${enrichedText} [Media shows: ${cleanDescription}]`
+                        : `[Media shows: ${cleanDescription}]`;
+                }
+                global._mediaBuffers.delete(normalized.userId);
+            }
+        } catch (err) {
+            console.error('🧠 [LANGCHAIN] Media step failed:', err.message);
+        }
+    }
+
+    // ── Past context ──
+    let contextText = '';
+    try {
+        const pastContext = await Grievance.find({ userId: normalized.userId, status: 'Resolved' })
+            .sort({ createdAt: -1 })
+            .limit(3);
+        if (pastContext.length > 0) {
+            contextText = 'PAST USER HISTORY:\n' + pastContext.map(c => `- ${c.classification?.summary}`).join('\n') + '\n\n';
+        }
+    } catch (e) {
+        // Non-blocking
+    }
+
+    // ── Run LangChain classify chain ──
+    console.log(`🧠 [LANGCHAIN] Classifying with Groq via LangChain...`);
+
+    const hasExifGps = doc?.media?.some(m => m.exif?.available) || false;
+
+    const aiResult = await runClassifyChain(enrichedText, normalized.text, {
+        enrichedData,
+        leafletPayload,
+        pastContext: contextText,
+        hasExifGps
+    });
+
+    // Image-only confidence cap
+    const isImageOnly = !normalized.text || normalized.text.trim().length < 3;
+    if (isImageOnly) {
+        aiResult.confidence_score = Math.min(aiResult.confidence_score, 60);
+    }
+
+    return aiResult;
+}
+
+/**
+ * Router: dispatches to LangChain or legacy Gemini path based on AI_HARNESS env.
+ */
+async function dispatch(normalized, getGeminiResponse, doc) {
+    if (process.env.AI_HARNESS === 'langchain') {
+        console.log(`🧠 [INTELLIGENCE] Using LangChain harness (Groq)`);
+        return runLangchain(normalized, getGeminiResponse, doc);
+    }
+    return run(normalized, getGeminiResponse, doc);
+}
+
+module.exports = { run: dispatch, _run: run, _runLangchain: runLangchain };
+
