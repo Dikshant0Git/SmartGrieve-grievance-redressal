@@ -33,12 +33,13 @@ const ComplaintController = async (req, res) => {
         });
 
         // 2. Handle Media Uploads (Images & Videos)
+        // 2. Handle Media Uploads (Images & Videos) in Parallel
         if (req.files && req.files.length > 0) {
-            console.log(`📷 [Web] Processing ${req.files.length} media files...`);
-            const mediaResults = [];
+            console.log(`📷 [Web] Processing ${req.files.length} media files in parallel...`);
+            
             const mediaBuffers = [];
             
-            for (const file of req.files) {
+            const uploadPromises = req.files.map(async (file) => {
                 const isVideo = file.mimetype.startsWith('video');
                 const resourceType = isVideo ? 'video' : 'image';
                 
@@ -57,14 +58,18 @@ const ComplaintController = async (req, res) => {
                         mediaEntry.image_url = cloudResult.secure_url;
                     }
 
-                    mediaResults.push(mediaEntry);
-                    
                     mediaBuffers.push({
                         buffer: file.buffer,
                         mimeType: file.mimetype
                     });
+                    
+                    return mediaEntry;
                 }
-            }
+                return null;
+            });
+            
+            const mediaResults = (await Promise.all(uploadPromises)).filter(entry => entry !== null);
+            
             complaint.media = mediaResults;
             await complaint.save();
 
